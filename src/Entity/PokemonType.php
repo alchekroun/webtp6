@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PokemonTypeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,9 +25,14 @@ class PokemonType
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=50, nullable=true)
+     * @ORM\OneToMany(targetEntity=Pokemon::class, mappedBy="type1")
      */
-    private $typeCourbe;
+    private $pokemon;
+
+    public function __construct()
+    {
+        $this->pokemon = new ArrayCollection();
+    }
     
     public function getId(): ?int
     {
@@ -44,15 +51,35 @@ class PokemonType
         return $this;
     }
 
-    public function getTypeCourbe(): ?string
+    /**
+     * @return Collection|Pokemon[]
+     */
+    public function getPokemon(): Collection
     {
-        return $this->typeCourbe;
+        return $this->pokemon;
     }
 
-    public function setTypeCourbe(?string $typeCourbe): self
+    public function addPokemon(Pokemon $pokemon): self
     {
-        $this->typeCourbe = $typeCourbe;
+        if (!$this->pokemon->contains($pokemon)) {
+            $this->pokemon[] = $pokemon;
+            $pokemon->setType1($this);
+        }
 
         return $this;
     }
+
+    public function removePokemon(Pokemon $pokemon): self
+    {
+        if ($this->pokemon->contains($pokemon)) {
+            $this->pokemon->removeElement($pokemon);
+            // set the owning side to null (unless already changed)
+            if ($pokemon->getType1() === $this) {
+                $pokemon->setType1(null);
+            }
+        }
+
+        return $this;
+    }
+
 }
