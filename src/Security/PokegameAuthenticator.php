@@ -66,12 +66,11 @@ class PokegameAuthenticator extends AbstractFormLoginAuthenticator implements Pa
         if (!$this->csrfTokenManager->isTokenValid($token)) {
             throw new InvalidCsrfTokenException();
         }
-
         $user = $this->entityManager->getRepository(User::class)->findOneBy(['username' => $credentials['username']]);
 
         if (!$user) {
             // fail authentication with a custom error
-            throw new CustomUserMessageAuthenticationException('Username could not be found.');
+            throw new CustomUserMessageAuthenticationException('Mauvaise combinaison login/mdp.');
         }
 
         return $user;
@@ -84,6 +83,8 @@ class PokegameAuthenticator extends AbstractFormLoginAuthenticator implements Pa
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     * @param $credentials
+     * @return string|null
      */
     public function getPassword($credentials): ?string
     {

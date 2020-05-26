@@ -2,11 +2,54 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('assets/img/9f256f96-57d2-11e6-86fc-6eef2ba19fee.png') }}">
+        <link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+        <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome-all.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/fonts/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome5-overrides.min.css') }}'">
+        <link rel="stylesheet" href="{{ asset('assets/css/Animated-CSS-Waves-Background-SVG.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/gradient-navbar.css') }}">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+        <link rel="stylesheet" href="{{ asset('assets/css/Login-Animate.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/Login-Form-Dark.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/Navigation-Clean.css') }}">
+        {% block stylesheets %}
+        {% endblock %}
     </head>
-    <body>
+    <body style="font-family: 'Source Sans Pro', sans-serif;background-image: url('/assets/img/wallhaven-4y5dyg.png');background-size: cover;background-position: top;">
+        <nav class="navbar navbar-light navbar-expand-md navigation-clean" id="app-navbar" style="color: rgb(255,255,255);">
+            <div class="container"><a class="navbar-brand" href="{{ path('home') }}">Pokegame</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse"
+                     id="navcol-1" style="color: rgb(255,255,255);">
+                    <ul class="nav navbar-nav ml-auto">
+                        {% if app.user %}
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="#" style="color: rgb(255,255,255);">Pokédex</a></li>
+                            <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(255,255,255);">Pokemon</a>
+                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">Mes pokemons</a><a class="dropdown-item" role="presentation" href="#">Marché</a><a class="dropdown-item" role="presentation" href="#">Entrainement</a><a class="dropdown-item"
+                                                                                                                                                                                                                                                                                      role="presentation" href="#">Chasse</a></div>
+                            </li>
+                            <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(255,255,255);">Mon compte&nbsp;</a>
+                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="{{ path('app_logout') }}">Se déconnecter</a></div>
+                            </li>
+                        {% else %}
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('app_login') }}" style="color: rgb(255,255,255);">Se connecter</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('app_register') }}" style="color: rgb(255,255,255);">S'inscrire</a></li>
+                        {% endif %}
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
         {% block body %}{% endblock %}
-        {% block javascripts %}{% endblock %}
+        <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+        <script src="{{ asset('assets/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('assets/js/bs-init.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+        {% block javascripts %}
+        {% endblock %}
     </body>
 </html>
