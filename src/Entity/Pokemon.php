@@ -18,32 +18,35 @@ class Pokemon
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=5)
-     */
-    private $courbeXP;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $evolution;
-
-    /**
-     * @ORM\Column(type="integer")
-     * @ORM\ManyToOne(targetEntity=PokemonType::class, inversedBy="pokemon")
+     * @ORM\ManyToOne(targetEntity=Espece::class, inversedBy="pokemon")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $type1;
+    private $espece;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
-     * @ORM\ManyToOne(targetEntity=PokemonType::class)
      */
-    private $type2;
+    private $prix;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $xp;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $elo;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $repos;
 
     public function getId(): ?int
     {
@@ -62,52 +65,63 @@ class Pokemon
         return $this;
     }
 
-    public function getCourbeXP(): ?string
+    public function getEspece(): ?Espece
     {
-        return $this->courbeXP;
+        return $this->espece;
     }
 
-    public function setCourbeXP(string $courbeXP): self
+    public function setEspece(?Espece $espece): self
     {
-        $this->courbeXP = $courbeXP;
+        $this->espece = $espece;
 
         return $this;
     }
 
-    public function getEvolution(): ?bool
+    public function getPrix(): ?int
     {
-        return $this->evolution;
+        return $this->prix;
     }
 
-    public function setEvolution(bool $evolution): self
+    public function setPrix(?int $prix): self
     {
-        $this->evolution = $evolution;
+        $this->prix = $prix;
 
         return $this;
     }
 
-    public function getType1(): ?PokemonType
+    public function getXp(): ?int
     {
-        return $this->type1;
+        return $this->xp;
     }
 
-    public function setType1(?PokemonType $type1): self
+    public function setXp(int $xp): self
     {
-        $this->type1 = $type1;
+        $this->xp = $xp;
 
         return $this;
     }
 
-    public function getType2(): ?PokemonType
+    public function getElo(): ?int
     {
-        return $this->type2;
+        return $this->elo;
     }
 
-    public function setType2(?PokemonType $type2): self
+    public function setElo(int $elo): self
     {
-        $this->type2 = $type2;
+        $this->elo = $elo;
 
         return $this;
     }
-    
+
+    public function getRepos(): ?\DateTimeInterface
+    {
+        return $this->repos;
+    }
+
+    public function setRepos(?\DateTimeInterface $repos): self
+    {
+        $this->repos = $repos;
+
+        return $this;
+    }
 }

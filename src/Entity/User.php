@@ -34,6 +34,16 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $argent;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false)
+     */
+    private $elo;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,5 +115,29 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getArgent(): ?int
+    {
+        return $this->argent;
+    }
+
+    public function setArgent(int $argent): self
+    {
+        $this->argent = $argent;
+
+        return $this;
+    }
+
+    public function getElo(): ?int
+    {
+        return $this->elo;
+    }
+
+    public function setElo(int $elo): self
+    {
+        $this->elo = $elo;
+
+        return $this;
     }
 }
