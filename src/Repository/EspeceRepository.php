@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Espece;
+use App\Entity\Type;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +20,21 @@ class EspeceRepository extends ServiceEntityRepository
         parent::__construct($registry, Espece::class);
     }
 
+    public function findRandomByType(Type $type)
+    {
+        $tok = rand(1, 2);
+
+        $res = $this->createQueryBuilder('e')
+            ->andWhere('e.type = :ty')
+            ->setParameter('ty', $type.getNom())
+            ->setMaxResults(2)
+            ->getQuery()
+            ->getResult();
+        if($tok = 1){
+            return $res[0];
+        }
+        return $res[1];
+    }
     // /**
     //  * @return Espece[] Returns an array of Espece objects
     //  */

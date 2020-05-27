@@ -29,6 +29,12 @@ class Type
      */
     private $especes;
 
+    // TODO REVOIR LES LIEUX
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lieu;
+
     public function __construct()
     {
         $this->especes = new ArrayCollection();
@@ -75,6 +81,18 @@ class Type
             $this->especes->removeElement($espece);
             $espece->removeType($this);
         }
+
+        return $this;
+    }
+
+    public function getLieu(): ?string
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?string $lieu): self
+    {
+        $this->lieu = $lieu;
 
         return $this;
     }

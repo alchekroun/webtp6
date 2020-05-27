@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PokemonRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -34,19 +36,34 @@ class Pokemon
     private $prix;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default": 0})
      */
-    private $xp;
+    private $xp = 0;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default": 1500})
      */
-    private $elo;
+    private $elo = 1500;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $repos;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="pokemons")
+     */
+    private $users;
+
+    /**
+     * @ORM\Column(type="string", length=255, options={"default": "libre"})
+     */
+    private $status = "libre";
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +138,46 @@ class Pokemon
     public function setRepos(?\DateTimeInterface $repos): self
     {
         $this->repos = $repos;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addPokemon($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->contains($user)) {
+            $this->users->removeElement($user);
+            $user->removePokemon($this);
+        }
+
+        return $this;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

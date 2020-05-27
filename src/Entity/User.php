@@ -3,13 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(fields={"username"}, message="There is already an account with this username")
+ * @UniqueEntity(fields={"username"}, message="Un compte avec le même identifiant existe déjà")
  */
 class User implements UserInterface
 {
@@ -45,6 +47,16 @@ class User implements UserInterface
      * @ORM\Column(type="integer", nullable=false, options={"default": 1500})
      */
     private $elo = 1500;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Pokemon::class, inversedBy="users")
+     */
+    private $pokemons;
+
+    public function __construct()
+    {
+        $this->pokemons = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -141,5 +153,36 @@ class User implements UserInterface
         $this->elo = $elo;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Pokemon[]
+     */
+    public function getPokemons(): Collection
+    {
+        return $this->pokemons;
+    }
+
+    public function addPokemon(Pokemon $pokemon): self
+    {
+        if (!$this->pokemons->contains($pokemon)) {
+            $this->pokemons[] = $pokemon;
+        }
+
+        return $this;
+    }
+
+    public function removePokemon(Pokemon $pokemon): self
+    {
+        if ($this->pokemons->contains($pokemon)) {
+            $this->pokemons->removeElement($pokemon);
+        }
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
     }
 }

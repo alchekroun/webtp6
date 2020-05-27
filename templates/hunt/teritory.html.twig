@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chasse{% endblock %}
+
+{% block body %}
+
+    {% for s in especes %}
+        <h1>{{ s }}</h1>
+    {% endfor %}
+
+{% endblock %}

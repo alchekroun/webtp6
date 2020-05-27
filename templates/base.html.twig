@@ -22,18 +22,27 @@
     </head>
     <body style="font-family: 'Source Sans Pro', sans-serif;background-image: url('/assets/img/wallhaven-4y5dyg.png');background-size: cover;background-position: top;">
         <nav class="navbar navbar-light navbar-expand-md navigation-clean" id="app-navbar" style="color: rgb(255,255,255);">
-            <div class="container"><a class="navbar-brand" href="{{ path('home') }}">Pokegame</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="container">
+                <a class="navbar-brand" href="{{ path('home') }}">Pokegame</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse"
                      id="navcol-1" style="color: rgb(255,255,255);">
                     <ul class="nav navbar-nav ml-auto">
                         {% if app.user %}
-                            <li class="nav-item" role="presentation"><a class="nav-link" href="#" style="color: rgb(255,255,255);">Pokédex</a></li>
-                            <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(255,255,255);">Pokemon</a>
-                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="#">Mes pokemons</a><a class="dropdown-item" role="presentation" href="#">Marché</a><a class="dropdown-item" role="presentation" href="#">Entrainement</a><a class="dropdown-item"
-                                                                                                                                                                                                                                                                                      role="presentation" href="#">Chasse</a></div>
+                            <li class="nav-item" role="presentation">
+                                <a class="nav-link" href="{{ path('home') }}" style="color: rgb(255,255,255);">Pokédex</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(255,255,255);">Pokemon</a>
+                                <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item" role="presentation" href="#">Mes pokemons</a>
+                                    <a class="dropdown-item" role="presentation" href="{{ path('market_index') }}">Marché</a>
+                                    <a class="dropdown-item" role="presentation" href="{{ path('train_index') }}">Entrainement</a>
+                                    <a class="dropdown-item" role="presentation" href="{{ path('hunt_index') }}">Chasse</a></div>
                             </li>
                             <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(255,255,255);">Mon compte&nbsp;</a>
-                                <div class="dropdown-menu" role="menu"><a class="dropdown-item" role="presentation" href="{{ path('app_logout') }}">Se déconnecter</a></div>
+                                <div class="dropdown-menu" role="menu">
+                                    <a class="dropdown-item" role="presentation" href="{{ path('app_logout') }}">Se déconnecter</a>
+                                </div>
                             </li>
                         {% else %}
                             <li class="nav-item" role="presentation"><a class="nav-link" href="{{ path('app_login') }}" style="color: rgb(255,255,255);">Se connecter</a></li>
