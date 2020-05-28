@@ -22,18 +22,17 @@ class EspeceRepository extends ServiceEntityRepository
 
     public function findRandomByType(Type $type)
     {
-        $tok = rand(1, 2);
-
-        $res = $this->createQueryBuilder('e')
-            ->andWhere('e.type = :ty')
-            ->setParameter('ty', $type.getNom())
-            ->setMaxResults(2)
-            ->getQuery()
-            ->getResult();
-        if($tok = 1){
-            return $res[0];
+        $conn = $this->getEntityManager()->getConnection();
+        $rawSql = "SELECT espece_id FROM espece_type WHERE espece_type.type_id = :tt";
+        $stmt = $conn->prepare($rawSql);
+        $stmt->execute(['tt' => $type->getId()]);
+        $espece_by_type = $stmt->fetchAll();
+        $tok = rand(0, sizeof($espece_by_type) - 1);
+        if(isset($espece_by_type))
+        {
+            return $espece_by_type[$tok];
         }
-        return $res[1];
+        return null;
     }
     // /**
     //  * @return Espece[] Returns an array of Espece objects

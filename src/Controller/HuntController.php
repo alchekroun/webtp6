@@ -37,7 +37,7 @@ class HuntController extends AbstractController
         // Request for species living in the spot
         // Type first
         $typeRepository = $this->getDoctrine()->getRepository(Type::class);
-        $type_by_lieu = $typeRepository->findBy(array('lieu' => $ter));
+        $type_by_lieu = $typeRepository->findBy(array($ter => 1));
 
         // Request five especes from thoses types
 
@@ -46,7 +46,6 @@ class HuntController extends AbstractController
         foreach ($type_by_lieu as $key){
             $espece_by_type->append($especeRepository->findRandomByType($key));
         }
-
         return $this->render('hunt/teritory.html.twig', [
             'especes' => $espece_by_type,
         ]);

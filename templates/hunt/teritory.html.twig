@@ -3,9 +3,18 @@
 {% block title %}Chasse{% endblock %}
 
 {% block body %}
-
-    {% for s in especes %}
-        <h1>{{ s }}</h1>
-    {% endfor %}
+    <div class="container">
+        <table>
+            <tbody>
+            {% for s in especes %}
+                <tr>
+                {% for ss in s %}
+                    <td>{{ ss }}</td><td><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ ss }}.png"/></td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 
 {% endblock %}
