@@ -30,6 +30,11 @@ class Espece
     private $courbeXP;
 
     /**
+     * @ORM\Column(type="string", length=3)
+     */
+    private $evolution;
+
+    /**
      * @ORM\ManyToMany(targetEntity=Type::class, inversedBy="especes")
      */
     private $type;
@@ -127,6 +132,18 @@ class Espece
                 $pokemon->setEspece(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getEvolution(): ?string
+    {
+        return $this->evolution;
+    }
+
+    public function setEvolution(string $evolution): self
+    {
+        $this->evolution = $evolution;
 
         return $this;
     }

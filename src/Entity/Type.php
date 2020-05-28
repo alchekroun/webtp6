@@ -29,11 +29,30 @@ class Type
      */
     private $especes;
 
-    // TODO REVOIR LES LIEUX
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="integer", nullable=true)
      */
-    private $lieu;
+    private $montagne;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $prairie;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $ville;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $foret;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $plage;
 
     public function __construct()
     {
@@ -85,15 +104,64 @@ class Type
         return $this;
     }
 
-    public function getLieu(): ?string
+    public function getMontagne(): ?int
     {
-        return $this->lieu;
+        return $this->montagne;
     }
 
-    public function setLieu(?string $lieu): self
+    public function setMontagne(?int $montagne): self
     {
-        $this->lieu = $lieu;
+        $this->montagne = $montagne;
 
         return $this;
     }
+
+    public function getPrairie(): ?int
+    {
+        return $this->prairie;
+    }
+
+    public function setPrairie(?int $prairie): self
+    {
+        $this->prairie = $prairie;
+
+        return $this;
+    }
+
+    public function getVille(): ?int
+    {
+        return $this->ville;
+    }
+
+    public function setVille(?int $ville): self
+    {
+        $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getForet(): ?int
+    {
+        return $this->foret;
+    }
+
+    public function setForet(?int $foret): self
+    {
+        $this->foret = $foret;
+
+        return $this;
+    }
+
+    public function getPlage(): ?int
+    {
+        return $this->plage;
+    }
+
+    public function setPlage(?int $plage): self
+    {
+        $this->plage = $plage;
+
+        return $this;
+    }
+
 }
