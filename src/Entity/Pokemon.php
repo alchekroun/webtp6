@@ -36,9 +36,9 @@ class Pokemon
     private $prix;
 
     /**
-     * @ORM\Column(type="integer", options={"default": 0})
+     * @ORM\Column(type="integer", options={"default": 1})
      */
-    private $xp = 0;
+    private $xp = 1;
 
     /**
      * @ORM\Column(type="integer", options={"default": 1500})
