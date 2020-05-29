@@ -23,7 +23,7 @@ class EspeceRepository extends ServiceEntityRepository
     public function findRandomByType(Type $type)
     {
         $conn = $this->getEntityManager()->getConnection();
-        $rawSql = "SELECT espece_id FROM espece_type WHERE espece_type.type_id = :tt";
+        $rawSql = "SELECT * FROM espece WHERE id IN (SELECT espece_id FROM espece_type WHERE espece_type.type_id = :tt)";
         $stmt = $conn->prepare($rawSql);
         $stmt->execute(['tt' => $type->getId()]);
         $espece_by_type = $stmt->fetchAll();

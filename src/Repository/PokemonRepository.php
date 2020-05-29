@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Pokemon;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -47,4 +48,13 @@ class PokemonRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findAllByUser(User $user)
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $rawSql = "SELECT * FROM Pokemon WHERE id IN (SELECT pokemon_id FROM user_pokemon WHERE user_id = :id)";
+        $stmt = $conn->prepare($rawSql);
+        $stmt->execute(['id' => $user->getId()]);
+        return $stmt->fetchAll();
+    }
 }

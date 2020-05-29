@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Espece;
+use App\Entity\Pokemon;
 use App\Entity\Type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,8 +47,10 @@ class HuntController extends AbstractController
         foreach ($type_by_lieu as $key){
             $espece_by_type->append($especeRepository->findRandomByType($key));
         }
+
         return $this->render('hunt/teritory.html.twig', [
             'especes' => $espece_by_type,
+            'poke_user' => $this->getDoctrine()->getRepository(Pokemon::class)->findAllByUser($this->getUser()),
         ]);
     }
 }
