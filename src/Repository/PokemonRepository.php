@@ -49,12 +49,31 @@ class PokemonRepository extends ServiceEntityRepository
     }
     */
 
-    public function findAllByUser(User $user)
+    public function getNiveau(Pokemon $pokemon)
+    {
+        $espece = $pokemon->getEspece();
+        if($espece->getCourbeXP() === 'R'){
+            return round(0.8 * pow($pokemon->getXp(), 1/3));
+        } else if ($espece->getCourbeXP() === 'M') {
+            return round(pow($pokemon->getXp(), 1/3));
+        } else if ($espece->getCourbeXP() === 'P') {
+            for($i = 5; $i < 100; $i++) {
+                if ($pokemon->getXp() > (1.2 * pow($i, 3) - 15 * pow($i, 2) + 100 * $i - 140)) {
+                    return $i;
+                }
+            }
+        } else if ($espece->getCourbeXP() === 'L') {
+            return round(1.25 * pow($pokemon->getXp(), 1/3));
+        }
+        return null;
+    }
+
+    public function findAllPurchasable()
     {
         $conn = $this->getEntityManager()->getConnection();
-        $rawSql = "SELECT * FROM Pokemon WHERE id IN (SELECT pokemon_id FROM user_pokemon WHERE user_id = :id)";
+        $rawSql = "SELECT * FROM pokemon WHERE status = :st";
         $stmt = $conn->prepare($rawSql);
-        $stmt->execute(['id' => $user->getId()]);
+        $stmt->execute(['st' => "avendre"]);
         return $stmt->fetchAll();
     }
 }

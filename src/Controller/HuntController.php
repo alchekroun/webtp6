@@ -44,7 +44,7 @@ class HuntController extends AbstractController
         $typeRepository = $this->getDoctrine()->getRepository(Type::class);
         $type_by_lieu = $typeRepository->findBy(array($ter => 1));
 
-        // Request five especes from thoses types
+        // Request especes from thoses types
 
         $especeRepository = $this->getDoctrine()->getRepository(Espece::class);
         $espece_by_type = new \ArrayObject();
@@ -53,15 +53,19 @@ class HuntController extends AbstractController
             $espece_by_type->append($especeRepository->findRandomByType($key));
         }
 
-        $pokeRepository = $this->getDoctrine()->getRepository(Pokemon::class);
-        $poke_by_user = new \ArrayObject();
+        // Request Pokemon owned by the user
 
-        foreach ($pokeRepository->findAllByUser($this->getUser()) as $key => $value)
+        $poke_by_user = new \ArrayObject();
+        foreach ($this->getUser()->getPokemons() as $key => $value)
         {
+            // TODO REVOIR LA GESTION DU REPOS !!
             if(($value["repos"] > date('m/d/Y h:i:s', strtotime("1 hour"))|| $value["repos"] == null ) && $value["status"] == "libre") {
                 $poke_by_user->append($value);
             }
         }
+
+        // Request the evolution status of pokemon owned by the user
+
         $evol_by_poke_by_user = new \ArrayObject();
         foreach ($poke_by_user as $key => $value)
         {
@@ -111,7 +115,7 @@ class HuntController extends AbstractController
             if ($capPkm->getEvolution() === 'n') {
                 $b = 1;
             }
-            $prob = 1 / ($b * (1 / ($a * ($myPkm->getXp() / 100))));
+            $prob = 1 / ($b * (1 / ($a * ($myPkm->getXp() / 2))));
             if ($token_chances <= $prob) {
                 $myPkm->setXp($myPkm->getXp() + 100);
                 $myPkm->setRepos(\DateTime::createFromFormat('d/m/Y h:i:s', date('d/m/Y h:i:s', time())));

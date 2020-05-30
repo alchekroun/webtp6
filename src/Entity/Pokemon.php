@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\PokemonRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -31,6 +32,11 @@ class Pokemon
     private $espece;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="pokemon")
+     */
+    private $user;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $prix;
@@ -51,18 +57,13 @@ class Pokemon
     private $repos;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="pokemons")
-     */
-    private $users;
-
-    /**
      * @ORM\Column(type="string", length=255, options={"default": "libre"})
      */
     private $status = "libre";
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->user = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -130,42 +131,26 @@ class Pokemon
         return $this;
     }
 
-    public function getRepos(): ?\DateTimeInterface
+    public function getRepos(): ?DateTimeInterface
     {
         return $this->repos;
     }
 
-    public function setRepos(?\DateTimeInterface $repos): self
+    public function setRepos(?DateTimeInterface $repos): self
     {
         $this->repos = $repos;
 
         return $this;
     }
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
+    public function getUser(): ?User
     {
-        return $this->users;
+        return $this->user;
     }
 
-    public function addUser(User $user): self
+    public function setUser(?User $user): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->addPokemon($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->contains($user)) {
-            $this->users->removeElement($user);
-            $user->removePokemon($this);
-        }
+        $this->user = $user;
 
         return $this;
     }

@@ -49,13 +49,13 @@ class User implements UserInterface
     private $elo = 1500;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Pokemon::class, inversedBy="users")
+     * @ORM\OneToMany(targetEntity=Pokemon::class, mappedBy="user")
      */
-    private $pokemons;
+    private $pokemon;
 
     public function __construct()
     {
-        $this->pokemons = new ArrayCollection();
+        $this->pokemon = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -160,13 +160,14 @@ class User implements UserInterface
      */
     public function getPokemons(): Collection
     {
-        return $this->pokemons;
+        return $this->pokemon;
     }
 
     public function addPokemon(Pokemon $pokemon): self
     {
-        if (!$this->pokemons->contains($pokemon)) {
-            $this->pokemons[] = $pokemon;
+        if (!$this->pokemon->contains($pokemon)) {
+            $this->pokemon[] = $pokemon;
+            $pokemon->setUser($this);
         }
 
         return $this;
@@ -174,15 +175,26 @@ class User implements UserInterface
 
     public function removePokemon(Pokemon $pokemon): self
     {
-        if ($this->pokemons->contains($pokemon)) {
-            $this->pokemons->removeElement($pokemon);
+        if ($this->pokemon->contains($pokemon)) {
+            $this->pokemon->removeElement($pokemon);
+            // set the owning side to null (unless already changed)
+            if ($pokemon->getUser() === $this) {
+                $pokemon->setUser(null);
+            }
         }
-
         return $this;
     }
 
     public function __toString()
     {
         return $this->getUsername();
+    }
+
+    /**
+     * @return Collection|Pokemon[]
+     */
+    public function getPokemon(): Collection
+    {
+        return $this->pokemon;
     }
 }
