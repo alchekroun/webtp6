@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 use App\Entity\Pokemon;
+use ArrayObject;
+use DateTime;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,18 +35,18 @@ class TrainController extends AbstractController
 
             $pkmPicked = $pokeRepository->find($_GET["pkmPicked"]);
             $pkmPicked->setXp($pkmPicked->getXp() + rand(100,300));
-            $pkmPicked->setRepos(\DateTime::createFromFormat('d/m/Y h:i:s', date('d/m/Y h:i:s', time())));
+            $pkmPicked->setRepos(DateTime::createFromFormat('d/m/Y h:i:s', date('d/m/Y h:i:s', time())));
             $entityManager->flush();
-            $message_xp = $pkmPicked->getNom() + " a prit 300xp, grâce à l'entrainement !";
+            $message_xp = $pkmPicked->getNom() . " a prit 300xp, grâce à l'entrainement !";
         }
 
         // Request the pokemon owned by the user available for the train session
 
-        $poke_by_user = new \ArrayObject();
+        $poke_by_user = new ArrayObject();
         foreach ($this->getUser()->getPokemons() as $key => $value)
         {
             // TODO REVOIR LA GESTION DU REPOS !!
-            if(($value["repos"] > date('m/d/Y h:i:s', strtotime("1 hour"))|| $value["repos"] == null ) && $value["status"] == "libre") {
+            if(($value->getRepos() > date('m/d/Y h:i:s', strtotime("1 hour"))|| $value->getRepos() == null ) && $value->getStatus() == "libre") {
                 $poke_by_user->append($value);
             }
         }

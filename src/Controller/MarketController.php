@@ -4,6 +4,7 @@
 namespace App\Controller;
 
 use App\Entity\Pokemon;
+use ArrayObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,11 +26,11 @@ class MarketController extends AbstractController
 
         // Request pokemon owned buy the user available for sell.
 
-        $poke_by_user = new \ArrayObject();
+        $poke_by_user = new ArrayObject();
         foreach ($this->getUser()->getPokemons() as $key => $value)
         {
             // TODO REVOIR LA GESTION DU REPOS !!
-            if($value["status"] == "libre") {
+            if($value->getStatus() == "libre") {
                 $poke_by_user->append($value);
             }
         }

@@ -17,7 +17,7 @@
                             <option value="-1" id="-1">Choisissez votre compagnon !</option>
                             {% for pkm in poke_user %}
                                 {% if pkm.status == "libre" %}
-                                    <option value="{{ pkm.id }}" id="{{ pkm.xp }}-{{ poke_evol[loop.index0] }}-{{ pkm.espece_id }}">{{ pkm.nom }} - {{ pkm.xp }}xp</option>
+                                    <option value="{{ pkm.id }}" id="{{ pkm.xp }}-{{ poke_evol[loop.index0] }}-{{ pkm.espece.id }}">{{ pkm.nom }} - {{ pkm.xp }}xp</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
@@ -77,7 +77,7 @@
                 }else{
                     a[1]=2;
                 }
-                const prob = 1 / (b[1] * (1 / (a[1] * (a[0]/2))));
+                const prob = 1 / (b[1] * (1 / (a[1] * (a[0]/8))));
                 element.innerText = prob + " %" ;
             });
         }

@@ -59,7 +59,7 @@ class HuntController extends AbstractController
         foreach ($this->getUser()->getPokemons() as $key => $value)
         {
             // TODO REVOIR LA GESTION DU REPOS !!
-            if(($value["repos"] > date('m/d/Y h:i:s', strtotime("1 hour"))|| $value["repos"] == null ) && $value["status"] == "libre") {
+            if(($value->getRepos() > date('m/d/Y h:i:s', strtotime("1 hour"))|| $value->getRepos() == null ) && $value->getStatus() == "libre") {
                 $poke_by_user->append($value);
             }
         }
@@ -69,7 +69,7 @@ class HuntController extends AbstractController
         $evol_by_poke_by_user = new \ArrayObject();
         foreach ($poke_by_user as $key => $value)
         {
-            $evol_by_poke_by_user->append($especeRepository->find($value["espece_id"])->getEvolution());
+            $evol_by_poke_by_user->append($value->getEspece()->getEvolution());
         }
 
         return $this->render('hunt/teritory.html.twig', [
@@ -115,7 +115,7 @@ class HuntController extends AbstractController
             if ($capPkm->getEvolution() === 'n') {
                 $b = 1;
             }
-            $prob = 1 / ($b * (1 / ($a * ($myPkm->getXp() / 2))));
+            $prob = 1 / ($b * (1 / ($a * ($myPkm->getXp() / 8))));
             if ($token_chances <= $prob) {
                 $myPkm->setXp($myPkm->getXp() + 100);
                 $myPkm->setRepos(\DateTime::createFromFormat('d/m/Y h:i:s', date('d/m/Y h:i:s', time())));
