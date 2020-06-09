@@ -32,12 +32,13 @@
                                 <a class="nav-link" href="{{ path('home') }}" style="color: rgb(255,255,255);">Pokédex</a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(255,255,255);">Pokemon</a>
+                                <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="{{ path('pokemon_index') }}" style="color: rgb(255,255,255);">Pokemon</a>
                                 <div class="dropdown-menu" role="menu">
-                                    <a class="dropdown-item" role="presentation" href="#">Mes pokemons</a>
+                                    <a class="dropdown-item" role="presentation" href="{{ path('pokemon_index') }}">Mes pokemons</a>
                                     <a class="dropdown-item" role="presentation" href="{{ path('market_index') }}">Marché</a>
                                     <a class="dropdown-item" role="presentation" href="{{ path('train_index') }}">Entrainement</a>
-                                    <a class="dropdown-item" role="presentation" href="{{ path('hunt_index') }}">Chasse</a></div>
+                                    <a class="dropdown-item" role="presentation" href="{{ path('hunt_index') }}">Chasse</a>
+                                </div>
                             </li>
                             <li class="nav-item dropdown"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#" style="color: rgb(255,255,255);">Mon compte&nbsp;</a>
                                 <div class="dropdown-menu" role="menu">

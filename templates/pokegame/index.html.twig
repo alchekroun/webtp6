@@ -6,7 +6,8 @@
     <h1>{{ nbPkm }}</h1>
     <h1>{{ nb_by_evol }}</h1>
     <h1>{{ nb_by_base }}</h1>
-    {% for nbType in nb_by_type %}
-        <h1>{{ nbType }}</h1>
+    {% for type, nbType in nb_by_type %}
+        <h1>{{ type }}</h1>
+        <h2>{{ nbType }}</h2>
     {% endfor %}
 {% endblock %}
