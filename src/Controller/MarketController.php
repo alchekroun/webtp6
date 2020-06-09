@@ -94,7 +94,7 @@ class MarketController extends AbstractController
      * @param Request $message
      * @return Response
      */
-    public function result(Request $message): Response
+    public function result($message): Response
     {
         return $this->render('market/result.html.twig', [
             'message' => $message,

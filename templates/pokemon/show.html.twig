@@ -3,44 +3,53 @@
 {% block title %}Pokemon{% endblock %}
 
 {% block body %}
-    <h1>Pokemon</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ pokemon.id }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ pokemon.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prix</th>
-                <td>{{ pokemon.prix }}</td>
-            </tr>
-            <tr>
-                <th>Xp</th>
-                <td>{{ pokemon.xp }}</td>
-            </tr>
-            <tr>
-                <th>Elo</th>
-                <td>{{ pokemon.elo }}</td>
-            </tr>
-            <tr>
-                <th>Repos</th>
-                <td>{{ pokemon.repos ? pokemon.repos|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-            <tr>
-                <th>Status</th>
-                <td>{{ pokemon.status }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('pokemon_index') }}">back to list</a>
-
-    <a href="{{ path('pokemon_edit', {'id': pokemon.id}) }}">edit</a>
-
-    {{ include('pokemon/_delete_form.html.twig') }}
+    <div class="container" style="margin-top: 40px;">
+        <div class="table-responsive table-borderless border rounded border-warning shadow" style="width: 50%; margin-right: auto; margin-left: auto;background-color: #1e2833;">
+            <table class="table">
+                <tbody style="color: white;">
+                <tr>
+                    <th class="text-center align-middle">{{ espece.nom }}</th>
+                    <td><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ espece.id }}.png" alt=""/></td>
+                </tr>
+                <tr>
+                    <th>Numéro Pokédex</th>
+                    <td>{{ espece.id }}</td>
+                </tr>
+                <tr>
+                    <th>Nom</th>
+                    <td>{{ pokemon.nom }}</td>
+                </tr>
+                <tr>
+                    <th>Type(s)</th>
+                    <td>{{ types[0].nom }}
+                        {% if types[1] is defined %}
+                            & {{ types[1].nom }}
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Xp</th>
+                    <td>{{ pokemon.xp }}</td>
+                </tr>
+                <tr>
+                    <th>Elo</th>
+                    <td>{{ pokemon.elo }}</td>
+                </tr>
+                <tr>
+                    <th>Repos</th>
+                    <td>{{ pokemon.repos ? pokemon.repos|date('Y-m-d H:i:s') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>Status</th>
+                    {% if pokemon.status == 'avendre' %}
+                        <td>A vendre au prix de {{ pokemon.prix }} PokeDollars</td>
+                    {% else %}
+                        <td>{{ pokemon.status }}</td>
+                    {% endif %}
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {{ include('pokemon/_delete_form.html.twig') }}
+    </div>
 {% endblock %}

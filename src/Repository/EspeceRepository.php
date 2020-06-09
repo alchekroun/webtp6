@@ -96,11 +96,8 @@ class EspeceRepository extends ServiceEntityRepository
                                     ('Sabelette', 'M', 'n'),
                                     ('Sablaireau', 'M', 'o'),
                                     ('Nidoran', 'P', 'n'),
-                                    ('Nidorina', 'P', 'o');";
-        $stmt = $conn->prepare($rawSql);
-        $stmt->execute();
-        $rawSql = "INSERT INTO espece (nom, courbe_xp, evolution)
-                            VALUES ('Nidoqueen', 'P', 'o'),
+                                    ('Nidorina', 'P', 'o'),
+                                    ('Nidoqueen', 'P', 'o'),
                                     ('Nidoran', 'P', 'n'),
                                     ('Nidorino', 'P', 'o'),
                                     ('Nidoking', 'P', 'o'),
@@ -129,11 +126,8 @@ class EspeceRepository extends ServiceEntityRepository
                                     ('Colossinge', 'M', 'o'),
                                     ('Caninos', 'L', 'n'),
                                     ('Arcanin', 'L', 'o'),
-                                    ('Ptitard', 'P', 'n');";
-        $stmt = $conn->prepare($rawSql);
-        $stmt->execute();
-        $rawSql = "INSERT INTO espece (nom, courbe_xp, evolution)
-                            VALUES  ('Tétarte', 'P', 'o'),
+                                    ('Ptitard', 'P', 'n'),
+                                    ('Tétarte', 'P', 'o'),
                                     ('Tartard', 'P', 'o'),
                                     ('Abra', 'P', 'n'),
                                     ('Kadabra', 'P', 'o'),
@@ -162,11 +156,8 @@ class EspeceRepository extends ServiceEntityRepository
                                     ('Lamantine', 'M', 'o'),
                                     ('Tadmorv', 'M', 'n'),
                                     ('Grotadmorv', 'M', 'o'),
-                                    ('Kokiyas', 'L', 'n');";
-        $stmt = $conn->prepare($rawSql);
-        $stmt->execute();
-        $rawSql = "INSERT INTO espece (nom, courbe_xp, evolution)
-                            VALUES  ('Crustabri', 'L', 'o'),
+                                    ('Kokiyas', 'L', 'n'),
+                                    ('Crustabri', 'L', 'o'),
                                     ('Fantominus', 'P', 'n'),
                                     ('Spectrum', 'P', 'o'),
                                     ('Ectoplasma', 'P', 'o'),
@@ -195,11 +186,8 @@ class EspeceRepository extends ServiceEntityRepository
                                     ('Hypocéan', 'M', 'o'),
                                     ('Poissirène', 'M', 'n'),
                                     ('Poissoroy', 'M', 'o'),
-                                    ('Stari', 'L', 'n');";
-        $stmt = $conn->prepare($rawSql);
-        $stmt->execute();
-        $rawSql = "INSERT INTO espece (nom, courbe_xp, evolution)
-                            VALUES  ('Staross', 'L', 'o'),
+                                    ('Stari', 'L', 'n'),
+                                    ('Staross', 'L', 'o'),
                                     ('M. Mime', 'M', 'n'),
                                     ('Insécateur', 'M', 'n'),
                                     ('Lippoutou', 'M', 'n'),
@@ -218,11 +206,8 @@ class EspeceRepository extends ServiceEntityRepository
                                     ('Porygon', 'M', 'n'),
                                     ('Amonita', 'M', 'n'),
                                     ('Amonistar', 'M', 'o'),
-                                    ('Kabuto', 'M', 'n');";
-        $stmt = $conn->prepare($rawSql);
-        $stmt->execute();
-        $rawSql = "INSERT INTO espece (nom, courbe_xp, evolution)
-                            VALUES  ('Kabutops', 'M', 'o'),
+                                    ('Kabuto', 'M', 'n'),
+                                    ('Kabutops', 'M', 'o'),
                                     ('Ptéra', 'L', 'n'),
                                     ('Ronflex', 'L', 'n'),
                                     ('Artikodin', 'L', 'n'),

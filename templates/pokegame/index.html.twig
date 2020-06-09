@@ -3,11 +3,39 @@
 {% block title %}Mon pokédex !{% endblock %}
 
 {% block body %}
-    <h1>{{ nbPkm }}</h1>
-    <h1>{{ nb_by_evol }}</h1>
-    <h1>{{ nb_by_base }}</h1>
-    {% for type, nbType in nb_by_type %}
-        <h1>{{ type }}</h1>
-        <h2>{{ nbType }}</h2>
-    {% endfor %}
+    <div class="container">
+        <h2 class="text-center" style="margin-top: 20px; color: #ffba08;">Votre pokédex</h2>
+    </div>
+    <div class="container" style="margin-top: 25px;">
+        <div class="table-responsive table-borderless border rounded border-warning shadow" style="width: 40%; margin-right: auto; margin-left: auto;background-color: #1e2833">
+            <table class="table table-bordered text-center">
+                <thead style="color: white">
+                    <tr>
+                        <th></th>
+                        <th>Nombre de pokémon</th>
+                    </tr>
+                </thead>
+                <tbody style="color: white;">
+                    <tr>
+                        <td>Total</td>
+                        <td>{{ nbPkm }}</td>
+                    </tr>
+                    <tr>
+                        <td>Base</td>
+                        <td>{{ nb_by_base }}</td>
+                    </tr>
+                    <tr>
+                        <td>Evolué</td>
+                        <td>{{ nb_by_evol }}</td>
+                    </tr>
+                    {% for type, nbType in nb_by_type %}
+                        <tr>
+                            <td>{{ type }}</td>
+                            <td>{{ nbType }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 {% endblock %}
