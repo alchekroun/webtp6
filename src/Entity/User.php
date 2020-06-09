@@ -3,11 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity(fields={"username"}, message="Un compte avec le même identifiant existe déjà")
  */
 class User implements UserInterface
 {
@@ -33,6 +37,26 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, options={"default": 100})
+     */
+    private $argent = 100;
+
+    /**
+     * @ORM\Column(type="integer", nullable=false, options={"default": 1500})
+     */
+    private $elo = 1500;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Pokemon::class, mappedBy="user")
+     */
+    private $pokemon;
+
+    public function __construct()
+    {
+        $this->pokemon = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -105,5 +129,72 @@ class User implements UserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getArgent(): ?int
+    {
+        return $this->argent;
+    }
+
+    public function setArgent(int $argent): self
+    {
+        $this->argent = $argent;
+
+        return $this;
+    }
+
+    public function getElo(): ?int
+    {
+        return $this->elo;
+    }
+
+    public function setElo(int $elo): self
+    {
+        $this->elo = $elo;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pokemon[]
+     */
+    public function getPokemons(): Collection
+    {
+        return $this->pokemon;
+    }
+
+    public function addPokemon(Pokemon $pokemon): self
+    {
+        if (!$this->pokemon->contains($pokemon)) {
+            $this->pokemon[] = $pokemon;
+            $pokemon->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePokemon(Pokemon $pokemon): self
+    {
+        if ($this->pokemon->contains($pokemon)) {
+            $this->pokemon->removeElement($pokemon);
+            // set the owning side to null (unless already changed)
+            if ($pokemon->getUser() === $this) {
+                $pokemon->setUser(null);
+            }
+        }
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->getUsername();
+    }
+
+    /**
+     * @return Collection|Pokemon[]
+     */
+    public function getPokemon(): Collection
+    {
+        return $this->pokemon;
     }
 }

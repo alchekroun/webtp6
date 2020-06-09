@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chasse{% endblock %}
+
+{% block body %}
+    <div class="container" style="padding: 10px;">
+        <form method="get" action="{{ path('hunt_hunted') }}">
+            <div class="row">
+                <div class="col">
+                    <p class="lead text-justify border rounded border-warning shadow" style="color: #ffffff;background-color: #1e2833;padding-right: 10px;padding-left: 10px;">Tu viens d'arriver sur les lieux, tu trouves ces pokémons. Clique sur le pokémon que tu veux capturer. Choisis bien ton pokémon car les chances varient selon ton allié !&nbsp;</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <label>Choisi ton pokémon, seuls les pokémons libre et qui n'ont pas combatu ni été entrainé la dernière heure peuvent t'aider à les capturer.
+                        <select onchange="actu(this)" name="mypkm" required>
+                            <option value="-1" id="-1">Choisissez votre compagnon !</option>
+                            {% for pkm in poke_user %}
+                                {% if pkm.status == "libre" %}
+                                    <option value="{{ pkm.id }}" id="{{ pkm.xp }}-{{ poke_evol[loop.index0] }}-{{ pkm.espece.id }}">{{ pkm.nom }} - {{ pkm.xp }}xp</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </label>
+                </div>
+                <div class="col"><img id="imgpkm" src=""></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="table-responsive table-borderless">
+                        <table class="table table-bordered">
+                            <tbody>
+                            {% for ss in especes %}
+                                <tr>
+                                    <td><label><input type="radio" name="cappkm" value="{{ ss.id }}" required>{{ ss.nom }}</label></td>
+                                    <td><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ ss.id }}.png"/></td>
+                                    <td><p id="chances-{{ ss.evolution }}"></p></td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <input type="submit" value="Le capturer !">
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function actu(elem){
+            let imgPkm = document.getElementById("imgpkm");
+            let chancespkm = document.querySelectorAll('[id^=chances');
+            chancespkm.forEach(element => {
+                const b = element.id.split('-');
+                if(b[1]==='n'){
+                    b[1]=1;
+                }else{
+                    b[1]=2;
+                }
+                let ahah = "";
+                for(let item of document.getElementsByTagName("option"))
+                {
+                    if(item.value===elem.value){
+                        ahah = item.id;
+                    }
+                }
+                const a = ahah.split('-');
+                imgPkm.src= "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + a[2] +".png";
+                if(a[1]==='n'){
+                    a[1]=1;
+                }else{
+                    a[1]=2;
+                }
+                const prob = 1 / (b[1] * (1 / (a[1] * (a[0]/8))));
+                element.innerText = prob + " %" ;
+            });
+        }
+    </script>
+{% endblock %}

@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Pokemon;
 use App\Form\PokemonType;
 use App\Repository\PokemonRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,11 +13,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/pokemon")
+ * @IsGranted("ROLE_USER")
  */
 class PokemonController extends AbstractController
 {
     /**
      * @Route("/", name="pokemon_index", methods={"GET"})
+     * @param PokemonRepository $pokemonRepository
+     * @return Response
      */
     public function index(PokemonRepository $pokemonRepository): Response
     {
@@ -27,6 +31,8 @@ class PokemonController extends AbstractController
 
     /**
      * @Route("/new", name="pokemon_new", methods={"GET","POST"})
+     * @param Request $request
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -50,6 +56,8 @@ class PokemonController extends AbstractController
 
     /**
      * @Route("/{id}", name="pokemon_show", methods={"GET"})
+     * @param Pokemon $pokemon
+     * @return Response
      */
     public function show(Pokemon $pokemon): Response
     {
@@ -60,6 +68,9 @@ class PokemonController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="pokemon_edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Pokemon $pokemon
+     * @return Response
      */
     public function edit(Request $request, Pokemon $pokemon): Response
     {
@@ -80,6 +91,9 @@ class PokemonController extends AbstractController
 
     /**
      * @Route("/{id}", name="pokemon_delete", methods={"DELETE"})
+     * @param Request $request
+     * @param Pokemon $pokemon
+     * @return Response
      */
     public function delete(Request $request, Pokemon $pokemon): Response
     {

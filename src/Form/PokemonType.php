@@ -6,17 +6,20 @@ use App\Entity\Pokemon;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PokemonType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('courbeXP')
-            ->add('evolution')
-            ->add('type1')
-            ->add('type2')
+            ->add('nom', null, ['label' => false,
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Vous devez lui donner un nom',
+                    ]),
+                    ]
+                ])
         ;
     }
 

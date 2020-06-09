@@ -16,20 +16,24 @@
                 <td>{{ pokemon.nom }}</td>
             </tr>
             <tr>
-                <th>CourbeXP</th>
-                <td>{{ pokemon.courbeXP }}</td>
+                <th>Prix</th>
+                <td>{{ pokemon.prix }}</td>
             </tr>
             <tr>
-                <th>Evolution</th>
-                <td>{{ pokemon.evolution ? 'Yes' : 'No' }}</td>
+                <th>Xp</th>
+                <td>{{ pokemon.xp }}</td>
             </tr>
             <tr>
-                <th>Type1</th>
-                <td>{{ pokemon.type1 }}</td>
+                <th>Elo</th>
+                <td>{{ pokemon.elo }}</td>
             </tr>
             <tr>
-                <th>Type2</th>
-                <td>{{ pokemon.type2 }}</td>
+                <th>Repos</th>
+                <td>{{ pokemon.repos ? pokemon.repos|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ pokemon.status }}</td>
             </tr>
         </tbody>
     </table>

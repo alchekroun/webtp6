@@ -10,10 +10,11 @@
             <tr>
                 <th>Id</th>
                 <th>Nom</th>
-                <th>CourbeXP</th>
-                <th>Evolution</th>
-                <th>Type1</th>
-                <th>Type2</th>
+                <th>Prix</th>
+                <th>Xp</th>
+                <th>Elo</th>
+                <th>Repos</th>
+                <th>Status</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -22,10 +23,11 @@
             <tr>
                 <td>{{ pokemon.id }}</td>
                 <td>{{ pokemon.nom }}</td>
-                <td>{{ pokemon.courbeXP }}</td>
-                <td>{{ pokemon.evolution ? 'Yes' : 'No' }}</td>
-                <td>{{ pokemon.type1 }}</td>
-                <td>{{ pokemon.type2 }}</td>
+                <td>{{ pokemon.prix }}</td>
+                <td>{{ pokemon.xp }}</td>
+                <td>{{ pokemon.elo }}</td>
+                <td>{{ pokemon.repos ? pokemon.repos|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ pokemon.status }}</td>
                 <td>
                     <a href="{{ path('pokemon_show', {'id': pokemon.id}) }}">show</a>
                     <a href="{{ path('pokemon_edit', {'id': pokemon.id}) }}">edit</a>
@@ -33,7 +35,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="8">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
