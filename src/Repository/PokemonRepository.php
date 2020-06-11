@@ -70,10 +70,10 @@ class PokemonRepository extends ServiceEntityRepository
 
     public function findAllPurchasable()
     {
-        $conn = $this->getEntityManager()->getConnection();
-        $rawSql = "SELECT * FROM pokemon WHERE status = :st";
-        $stmt = $conn->prepare($rawSql);
-        $stmt->execute(['st' => "avendre"]);
-        return $stmt->fetchAll();
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.status = :st')
+            ->setParameter('st', "avendre")
+            ->getQuery()
+            ->getResult();
     }
 }

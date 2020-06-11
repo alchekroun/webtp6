@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marché{% endblock %}
+
+{% block body %}
+    <div class="container" style="margin-top: 50px;">
+        <div>
+            <p class="lead text-justify border rounded border-warning shadow" style="color: #FFFFFF; background-color: #1e2833; padding-right: 10px; padding-left: 10px;">
+                {% if message == "buy" %}
+                    Il fait maintenant parti de ton équipe. Va vite jeter un oeil à ton pokédex et la liste de tes pokémons !
+                {% elseif message == "nofund" %}
+                    Tu n'as malheureusement pas assez de pokédollar pour te l'acheter
+                {% elseif message == "sell" %}
+                    Il est maintenant en vente sur le marché, tu dois attendre que quelqu'un l'achète.
+                {% elseif message == "out" %}
+                    Ton pokémon retourne auprès de toi, il n'est plus sur le marché.
+                {% endif %}
+            </p>
+        </div>
+        <a href="{{ path('market_index') }}" class="btn btn-dark">Retour sur le marché.</a>
+    </div>
+{% endblock %}

@@ -27,18 +27,20 @@ class MarketController extends AbstractController
         // Request pokemon owned buy the user available for sell.
 
         $poke_by_user = new ArrayObject();
+        $espece_by_poke_by_user = new ArrayObject();
         foreach ($this->getUser()->getPokemons() as $key => $value)
         {
             // TODO REVOIR LA GESTION DU REPOS !!
             if($value->getStatus() == "libre") {
                 $poke_by_user->append($value);
+                $espece_by_poke_by_user->append($value->getEspece());
             }
         }
 
         $poke_to_buy = $pokeRepository->findAllPurchasable();
 
         return $this->render('market/index.html.twig', [
-            'poke_user' => $poke_by_user,
+            'poke_by_user' => $poke_by_user,
             'poke_to_buy' => $poke_to_buy,
         ]);
     }
@@ -65,11 +67,12 @@ class MarketController extends AbstractController
         $pokeRepository = $this->getDoctrine()->getRepository(Pokemon::class);
         $entityManager = $this->getDoctrine()->getManager();
         $pkmToBuy = $pokeRepository->find($_GET["pkmToBuy"]);
-        if($this->getUser()->getArgent() < $pkmToBuy->getPrix()){
-            $pkmToBuy->getUser()->removePokemon($pkmToBuy);
+        if($this->getUser()->getArgent() > $pkmToBuy->getPrix()){
             $pkmToBuy->getUser()->setArgent($pkmToBuy->getUser()->getArgent() + $pkmToBuy->getPrix());
+            $pkmToBuy->getUser()->removePokemon($pkmToBuy);
             $this->getUser()->setArgent($this->getUser()->getArgent() - $pkmToBuy->getPrix());
             $this->getUser()->addPokemon($pkmToBuy);
+            $pkmToBuy->setStatus("libre");
             $entityManager->flush();
             return $this->redirectToRoute('market_result', ['message' => "buy"]);
         }
@@ -77,13 +80,15 @@ class MarketController extends AbstractController
     }
 
     /**
-     * @Route("/out", name="market_out", methods={"GET"})
+     * @Route("/out/{id}", name="market_out", methods={"GET"})
+     * @param $id
+     * @return Response
      */
-    public function out(): Response
+    public function out($id): Response
     {
         $pokeRepository = $this->getDoctrine()->getRepository(Pokemon::class);
         $entityManager = $this->getDoctrine()->getManager();
-        $pkmToOut = $pokeRepository->find($_GET["pkmToOut"]);
+        $pkmToOut = $pokeRepository->find($id);
         $pkmToOut->setStatus("libre");
         $entityManager->flush();
         return $this->redirectToRoute('market_result', ['message' => "out"]);
