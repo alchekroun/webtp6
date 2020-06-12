@@ -45,9 +45,14 @@ class TrainController extends AbstractController
         $poke_by_user = new ArrayObject();
         foreach ($this->getUser()->getPokemons() as $key => $value)
         {
-            // TODO REVOIR LA GESTION DU REPOS !!
-            if(($value->getRepos() > date('m/d/Y h:i:s', strtotime("1 hour"))|| $value->getRepos() == null ) && $value->getStatus() == "libre") {
-                $poke_by_user->append($value);
+            if($value->getStatus() == "libre"){
+                if($value->getRepos() != null) {
+                    $value->getRepos()->add(new \DateInterval('PT1H'));
+                }
+                if($value->getRepos() == null || $value->getRepos() < \DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y H:i:s', time()))){
+                    $value->getRepos()->sub(new \DateInterval('PT1H'));
+                    $poke_by_user->append($value);
+                }
             }
         }
 

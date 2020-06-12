@@ -23,6 +23,14 @@ date_default_timezone_set('Europe/Paris');
 class HuntController extends AbstractController
 {
 
+    function debug_to_console($data) {
+        $output = $data;
+        if (is_array($output))
+            $output = implode(',', $output);
+
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
+    }
+
     /**
      * @Route("/", name="hunt_index", methods={"GET"})
      */
@@ -45,7 +53,6 @@ class HuntController extends AbstractController
         $type_by_lieu = $typeRepository->findBy(array($ter => 1));
 
         // Request especes from thoses types
-
         $especeRepository = $this->getDoctrine()->getRepository(Espece::class);
         $espece_by_type = new \ArrayObject();
         foreach ($type_by_lieu as $key)
@@ -54,28 +61,23 @@ class HuntController extends AbstractController
         }
 
         // Request Pokemon owned by the user
-
         $poke_by_user = new \ArrayObject();
         foreach ($this->getUser()->getPokemons() as $key => $value)
         {
-            // TODO REVOIR LA GESTION DU REPOS !!
-            if(($value->getRepos() > date('m/d/Y h:i:s', strtotime("1 hour"))|| $value->getRepos() == null ) && $value->getStatus() == "libre") {
-                $poke_by_user->append($value);
+            if($value->getStatus() == "libre"){
+                if($value->getRepos() != null) {
+                    $value->getRepos()->add(new \DateInterval('PT1H'));
+                }
+                if($value->getRepos() == null || $value->getRepos() < \DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y H:i:s', time()))){
+                    $value->getRepos()->sub(new \DateInterval('PT1H'));
+                    $poke_by_user->append($value);
+                }
             }
-        }
-
-        // Request the evolution status of pokemon owned by the user
-
-        $evol_by_poke_by_user = new \ArrayObject();
-        foreach ($poke_by_user as $key => $value)
-        {
-            $evol_by_poke_by_user->append($value->getEspece()->getEvolution());
         }
 
         return $this->render('hunt/teritory.html.twig', [
             'especes' => $espece_by_type,
             'poke_user' => $poke_by_user,
-            'poke_evol' => $evol_by_poke_by_user,
         ]);
     }
 
@@ -118,7 +120,7 @@ class HuntController extends AbstractController
             $prob = 1 / ($b * (1 / ($a * ($myPkm->getXp() / 8))));
             if ($token_chances <= $prob) {
                 $myPkm->setXp($myPkm->getXp() + 100);
-                $myPkm->setRepos(\DateTime::createFromFormat('d/m/Y h:i:s', date('d/m/Y h:i:s', time())));
+                $myPkm->setRepos(\DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y H:i:s', time())));
                 $entityManager->flush();
 
                 return $this->render(
@@ -131,7 +133,7 @@ class HuntController extends AbstractController
                 );
             } else {
                 $myPkm->setXp($myPkm->getXp() + 50);
-                $myPkm->setRepos(\DateTime::createFromFormat('d/m/Y h:i:s', date('d/m/Y h:i:s', time())));
+                $myPkm->setRepos(\DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y h:i:s', time())));
                 $entityManager->flush();
 
                 return $this->render(

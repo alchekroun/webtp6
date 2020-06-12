@@ -25,7 +25,7 @@ class PokemonController extends AbstractController
     public function index(PokemonRepository $pokemonRepository): Response
     {
         return $this->render('pokemon/index.html.twig', [
-            'pokemon' => $pokemonRepository->findAll(),
+            'pokemon' => $this->getUser()->getPokemons(),
         ]);
     }
 

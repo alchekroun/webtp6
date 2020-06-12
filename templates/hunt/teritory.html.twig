@@ -14,27 +14,27 @@
                 <div class="col text-center">
                     <label>Choisi ton pokémon, seuls les pokémons libre et qui n'ont pas combatu ni été entrainé la dernière heure peuvent t'aider à les capturer.
                         <select onchange="actu(this)" name="mypkm" required>
-                            <option value="-1" id="-1">Choisissez votre compagnon !</option>
+                            <option value="" id="-1">Choisissez votre compagnon !</option>
                             {% for pkm in poke_user %}
                                 {% if pkm.status == "libre" %}
-                                    <option value="{{ pkm.id }}" id="{{ pkm.xp }}-{{ poke_evol[loop.index0] }}-{{ pkm.espece.id }}">{{ pkm.nom }} - {{ pkm.xp }}xp</option>
+                                    <option value="{{ pkm.id }}" id="{{ pkm.xp }}-{{ pkm.getEspece().id }}-{{ pkm.espece.id }}">{{ pkm.nom }} - {{ pkm.xp }}xp</option>
                                 {% endif %}
                             {% endfor %}
                         </select>
                     </label>
                 </div>
-                <div class="col"><img id="imgpkm" src=""></div>
+                <div class="col"><img id="imgpkm" src="" alt="img : Ton pokémon"></div>
             </div>
             <div class="row">
                 <div class="col">
                     <div class="table-responsive table-borderless border rounded border-warning shadow" style="background-color: #1e2833">
                         <table class="table table-bordered">
                             <tbody style="color: #FFFFFF">
-                            {% for ss in especes %}
+                            {% for speciesToCapture in especes %}
                                 <tr>
-                                    <td><label><input type="radio" name="cappkm" value="{{ ss.id }}" required>{{ ss.nom }}</label></td>
-                                    <td><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ ss.id }}.png"/></td>
-                                    <td style="color: red"><p id="chances-{{ ss.evolution }}"></p></td>
+                                    <td><label><input type="radio" name="cappkm" value="{{ speciesToCapture.id }}" required>{{ speciesToCapture.nom }}</label></td>
+                                    <td><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ speciesToCapture.id }}.png" alt="img : {{ speciesToCapture.nom }}"/></td>
+                                    <td style="color: red"><p id="chances-{{ speciesToCapture.evolution }}"></p></td>
                                 </tr>
                             {% endfor %}
                             </tbody>

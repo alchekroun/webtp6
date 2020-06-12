@@ -30,7 +30,6 @@ class MarketController extends AbstractController
         $espece_by_poke_by_user = new ArrayObject();
         foreach ($this->getUser()->getPokemons() as $key => $value)
         {
-            // TODO REVOIR LA GESTION DU REPOS !!
             if($value->getStatus() == "libre") {
                 $poke_by_user->append($value);
                 $espece_by_poke_by_user->append($value->getEspece());
