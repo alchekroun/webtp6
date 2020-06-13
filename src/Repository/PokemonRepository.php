@@ -7,10 +7,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Pokemon|null find($id, $lockMode = null, $lockVersion = null)
- * @method Pokemon|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Pokemon|null find($id, $lockMode = NULL, $lockVersion = NULL)
+ * @method Pokemon|null findOneBy(array $criteria, array $orderBy = NULL)
  * @method Pokemon[]    findAll()
- * @method Pokemon[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Pokemon[]    findBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL)
  */
 class PokemonRepository extends ServiceEntityRepository
 {
@@ -51,20 +51,27 @@ class PokemonRepository extends ServiceEntityRepository
     public function getNiveau(Pokemon $pokemon)
     {
         $espece = $pokemon->getEspece();
-        if($espece->getCourbeXP() === 'R'){
-            return round(0.8 * pow($pokemon->getXp(), 1/3));
-        } else if ($espece->getCourbeXP() === 'M') {
-            return round(pow($pokemon->getXp(), 1/3));
-        } else if ($espece->getCourbeXP() === 'P') {
-            for($i = 5; $i < 100; $i++) {
-                if ($pokemon->getXp() > (1.2 * pow($i, 3) - 15 * pow($i, 2) + 100 * $i - 140)) {
-                    return $i;
+        if ($espece->getCourbeXP() === 'R') {
+            return round(0.8 * pow($pokemon->getXp(), 1 / 3));
+        } else {
+            if ($espece->getCourbeXP() === 'M') {
+                return round(pow($pokemon->getXp(), 1 / 3));
+            } else {
+                if ($espece->getCourbeXP() === 'P') {
+                    for ($i = 5; $i < 100; $i++) {
+                        if ($pokemon->getXp() > (1.2 * pow($i, 3) - 15 * pow($i, 2) + 100 * $i - 140)) {
+                            return $i;
+                        }
+                    }
+                } else {
+                    if ($espece->getCourbeXP() === 'L') {
+                        return round(1.25 * pow($pokemon->getXp(), 1 / 3));
+                    }
                 }
             }
-        } else if ($espece->getCourbeXP() === 'L') {
-            return round(1.25 * pow($pokemon->getXp(), 1/3));
         }
-        return null;
+
+        return NULL;
     }
 
     public function findAllPurchasable()

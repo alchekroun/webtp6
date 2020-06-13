@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Entraînement : {{ pokemon.nom }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center" style="margin-top: 20px; color: #ffba08;">+ {{ xpearned }} XP</h2>
+    </div>
+    <div class="container" style="padding: 10px;">
+        <p class="lead text-justify border rounded border-warning shadow"
+           style="color: #FFFFFF; background-color: #1e2833; padding-right: 10px; padding-left: 10px;">L'entraînement
+            s'est bien déroulé pour ton {{ pokemon.getEspece().nom }}. Il doit maintenant se reposer 1h avant de pouvoir
+            chasser ou bien s'entraîner à nouveau.</p>
+        <a href="{{ path('train_index') }}" class="btn btn-dark">Entrainer un autre.</a>
+    </div>
+{% endblock %}

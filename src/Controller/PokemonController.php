@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Pokemon;
-use App\Form\PokemonType;
 use App\Repository\PokemonRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,9 +23,12 @@ class PokemonController extends AbstractController
      */
     public function index(PokemonRepository $pokemonRepository): Response
     {
-        return $this->render('pokemon/index.html.twig', [
-            'pokemon' => $this->getUser()->getPokemons(),
-        ]);
+        return $this->render(
+            'pokemon/index.html.twig',
+            [
+                'pokemon' => $this->getUser()->getPokemons(),
+            ]
+        );
     }
 
     /**
@@ -36,11 +38,14 @@ class PokemonController extends AbstractController
      */
     public function show(Pokemon $pokemon): Response
     {
-        return $this->render('pokemon/show.html.twig', [
-            'pokemon' => $pokemon,
-            'espece' => $pokemon->getEspece(),
-            'types' => $pokemon->getEspece()->getType(),
-        ]);
+        return $this->render(
+            'pokemon/show.html.twig',
+            [
+                'pokemon' => $pokemon,
+                'espece' => $pokemon->getEspece(),
+                'types' => $pokemon->getEspece()->getType(),
+            ]
+        );
     }
 
     /**
@@ -51,7 +56,7 @@ class PokemonController extends AbstractController
      */
     public function delete(Request $request, Pokemon $pokemon): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$pokemon->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $pokemon->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->remove($pokemon);
             $entityManager->flush();

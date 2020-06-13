@@ -64,18 +64,6 @@ class Type
         return $this->id;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
     /**
      * @return Collection|Espece[]
      */
@@ -167,5 +155,17 @@ class Type
     public function __toString()
     {
         return $this->getNom();
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 }

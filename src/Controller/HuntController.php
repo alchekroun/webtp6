@@ -7,13 +7,14 @@ use App\Entity\Espece;
 use App\Entity\Pokemon;
 use App\Entity\Type;
 use App\Form\PokemonType;
+use DateInterval;
+use DateTime;
+use DateTimeZone;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 date_default_timezone_set('Europe/Paris');
 /**
@@ -22,14 +23,14 @@ date_default_timezone_set('Europe/Paris');
  */
 class HuntController extends AbstractController
 {
-
+    /*
     function debug_to_console($data) {
         $output = $data;
         if (is_array($output))
             $output = implode(',', $output);
 
         echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
-    }
+    }*/
 
     /**
      * @Route("/", name="hunt_index", methods={"GET"})
@@ -41,11 +42,10 @@ class HuntController extends AbstractController
 
     /**
      * @Route("/teritory/{ter}", name="hunt_teritory", methods={"GET"})
-     * @param Request $request
      * @param $ter
      * @return Response
      */
-    public function teritory(Request $request, $ter): Response
+    public function teritory($ter): Response
     {
         // Request for species living in the spot
         // Type first
@@ -65,12 +65,12 @@ class HuntController extends AbstractController
         foreach ($this->getUser()->getPokemons() as $key => $value)
         {
             if($value->getStatus() == "libre"){
-                if($value->getRepos() != null) {
-                    $value->getRepos()->add(new \DateInterval('PT1H'));
-                }
-                if($value->getRepos() == null || $value->getRepos() < \DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y H:i:s', time()))){
-                    $value->getRepos()->sub(new \DateInterval('PT1H'));
+                if($value->getRepos() == null) {
                     $poke_by_user->append($value);
+                }else if ($value->getRepos() < DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y H:i:s', time()), new DateTimeZone("Europe/Paris"))){
+                    $value->getRepos()->add(new DateInterval('PT1H'));
+                    $poke_by_user->append($value);
+                    $value->getRepos()->sub(new DateInterval('PT1H'));
                 }
             }
         }
@@ -120,7 +120,7 @@ class HuntController extends AbstractController
             $prob = 1 / ($b * (1 / ($a * ($myPkm->getXp() / 8))));
             if ($token_chances <= $prob) {
                 $myPkm->setXp($myPkm->getXp() + 100);
-                $myPkm->setRepos(\DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y H:i:s', time())));
+                $myPkm->setRepos(DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y H:i:s', time()), new DateTimeZone("Europe/Paris")));
                 $entityManager->flush();
 
                 return $this->render(
@@ -133,7 +133,7 @@ class HuntController extends AbstractController
                 );
             } else {
                 $myPkm->setXp($myPkm->getXp() + 50);
-                $myPkm->setRepos(\DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y h:i:s', time())));
+                $myPkm->setRepos(DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y h:i:s', time()), new DateTimeZone("Europe/Paris")));
                 $entityManager->flush();
 
                 return $this->render(

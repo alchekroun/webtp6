@@ -28,9 +28,8 @@ class MarketController extends AbstractController
 
         $poke_by_user = new ArrayObject();
         $espece_by_poke_by_user = new ArrayObject();
-        foreach ($this->getUser()->getPokemons() as $key => $value)
-        {
-            if($value->getStatus() == "libre") {
+        foreach ($this->getUser()->getPokemons() as $key => $value) {
+            if ($value->getStatus() == "libre") {
                 $poke_by_user->append($value);
                 $espece_by_poke_by_user->append($value->getEspece());
             }
@@ -38,10 +37,13 @@ class MarketController extends AbstractController
 
         $poke_to_buy = $pokeRepository->findAllPurchasable();
 
-        return $this->render('market/index.html.twig', [
-            'poke_by_user' => $poke_by_user,
-            'poke_to_buy' => $poke_to_buy,
-        ]);
+        return $this->render(
+            'market/index.html.twig',
+            [
+                'poke_by_user' => $poke_by_user,
+                'poke_to_buy' => $poke_to_buy,
+            ]
+        );
     }
 
     /**
@@ -55,6 +57,7 @@ class MarketController extends AbstractController
         $pkmToSell->setStatus("avendre");
         $pkmToSell->setPrix($_GET["pkmPrix"]);
         $entityManager->flush();
+
         return $this->redirectToRoute('market_result', ['message' => "sell"]);
     }
 
@@ -66,15 +69,17 @@ class MarketController extends AbstractController
         $pokeRepository = $this->getDoctrine()->getRepository(Pokemon::class);
         $entityManager = $this->getDoctrine()->getManager();
         $pkmToBuy = $pokeRepository->find($_GET["pkmToBuy"]);
-        if($this->getUser()->getArgent() > $pkmToBuy->getPrix()){
+        if ($this->getUser()->getArgent() > $pkmToBuy->getPrix()) {
             $pkmToBuy->getUser()->setArgent($pkmToBuy->getUser()->getArgent() + $pkmToBuy->getPrix());
             $pkmToBuy->getUser()->removePokemon($pkmToBuy);
             $this->getUser()->setArgent($this->getUser()->getArgent() - $pkmToBuy->getPrix());
             $this->getUser()->addPokemon($pkmToBuy);
             $pkmToBuy->setStatus("libre");
             $entityManager->flush();
+
             return $this->redirectToRoute('market_result', ['message' => "buy"]);
         }
+
         return $this->redirectToRoute('market_result', ['message' => "nofund"]);
     }
 
@@ -90,6 +95,7 @@ class MarketController extends AbstractController
         $pkmToOut = $pokeRepository->find($id);
         $pkmToOut->setStatus("libre");
         $entityManager->flush();
+
         return $this->redirectToRoute('market_result', ['message' => "out"]);
     }
 
@@ -100,8 +106,11 @@ class MarketController extends AbstractController
      */
     public function result($message): Response
     {
-        return $this->render('market/result.html.twig', [
-            'message' => $message,
-        ]);
+        return $this->render(
+            'market/result.html.twig',
+            [
+                'message' => $message,
+            ]
+        );
     }
 }

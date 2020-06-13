@@ -5,8 +5,10 @@
 {% block body %}
     <div style="padding: 10px;">
         <div class="container">
-            <p class="lead text-justify border rounded border-warning shadow" style="color: #FFFFFF; background-color: #1e2833; padding-right: 10px; padding-left: 10px;">
-                Bienvenue dans le Marché ! Ici tu peux acheter ou vendre des pokémons à un certains prix. Passe ta souris par dessus les pokémons pour plus d'informations à leur sujet.
+            <p class="lead text-justify border rounded border-warning shadow"
+               style="color: #FFFFFF; background-color: #1e2833; padding-right: 10px; padding-left: 10px;">
+                Bienvenue dans le Marché ! Ici tu peux acheter ou vendre des pokémons à un certains prix. Passe ta
+                souris par dessus les pokémons pour plus d'informations à leur sujet.
             </p>
         </div>
         <div class="container">
@@ -16,7 +18,8 @@
                         <h2 style="color: #ffba08">Achat</h2>
                     </div>
                     <form action="{{ path('market_buy') }}" method="get">
-                        <div class="table-responsive border rounded border-warning shadow overflow-auto" style="background-color: #1e2833;height: 270px;">
+                        <div class="table-responsive border rounded border-warning shadow overflow-auto"
+                             style="background-color: #1e2833;height: 270px;">
                             <table class="table">
                                 <thead style="color: white;">
                                 <tr>
@@ -26,13 +29,17 @@
                                 <tbody style="color: white;">
                                 {% for pokemon in poke_to_buy %}
                                     <tr>
-                                        <td><label><input type="radio" name="pkmToBuy" value="{{ pokemon.id }}"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.getEspece().id }}.png" width="30" height="30" alt="{{ pokemon.getEspece().nom }}"/></label></td>
+                                        <td><label><input type="radio" name="pkmToBuy" value="{{ pokemon.id }}"><img
+                                                        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.getEspece().id }}.png"
+                                                        width="30" height="30"
+                                                        alt="{{ pokemon.getEspece().nom }}"/></label></td>
                                         <td data-togle="tooltip" data-placement="left"
                                             title="Espece : {{ pokemon.getEspece().nom }}&#13;Type : {{ pokemon.getEspece().getType()[0].nom }} {% if pokemon.getEspece().getType()[1] is defined %} & {{ pokemon.getEspece().getType()[1] }}{% endif %}&#13;XP : {{ pokemon.xp }}">{{ pokemon.nom }}</td>
                                         <td>{{ pokemon.prix }} $</td>
                                         {% if app.user == pokemon.getUser() %}
                                             <td>
-                                                <a href="{{ path('market_out', {'id': pokemon.id}) }}" class="btn btn-warning">X</a>
+                                                <a href="{{ path('market_out', {'id': pokemon.id}) }}"
+                                                   class="btn btn-warning">X</a>
                                             </td>
                                         {% endif %}
                                     </tr>
@@ -41,7 +48,8 @@
                             </table>
                         </div>
                         <div>
-                            <input id="buttonSubmitBuy" type="submit" value="Acheter ce pokémon !" onclick="return confirm('Es-tu sûr de ton choix ?');">
+                            <input id="buttonSubmitBuy" type="submit" value="Acheter ce pokémon !"
+                                   onclick="return confirm('Es-tu sûr de ton choix ?');">
                         </div>
                     </form>
                 </div>
@@ -50,7 +58,8 @@
                         <h2 style="color: #ffba08">Vente</h2>
                     </div>
                     <form action="{{ path('marker_sell') }}" method="get">
-                        <div class="table-responsive border rounded border-warning shadow overflow-auto" style="background-color: #1e2833;height: 270px;">
+                        <div class="table-responsive border rounded border-warning shadow overflow-auto"
+                             style="background-color: #1e2833;height: 270px;">
                             <table class="table">
                                 <thead style="color: white;">
                                 <tr>
@@ -60,7 +69,11 @@
                                 <tbody style="color: white;">
                                 {% for pokemon in poke_by_user %}
                                     <tr>
-                                        <td><label><input id="sell-{{ pokemon.id }}" type="radio" name="pkmToSell" value="{{ pokemon.id }}" onclick="addPrice(this)"><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.getEspece().id }}.png" width="30" height="30" alt="{{ pokemon.getEspece().nom }}"/></label></td>
+                                        <td><label><input id="sell-{{ pokemon.id }}" type="radio" name="pkmToSell"
+                                                          value="{{ pokemon.id }}" onclick="addPrice(this)"><img
+                                                        src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.getEspece().id }}.png"
+                                                        width="30" height="30"
+                                                        alt="{{ pokemon.getEspece().nom }}"/></label></td>
                                         <td data-togle="tooltip" data-placement="left"
                                             title="Espece : {{ pokemon.getEspece().nom }}&#13;Type : {{ pokemon.getEspece().getType()[0].nom }} {% if pokemon.getEspece().getType()[1] is defined %} & {{ pokemon.getEspece().getType()[1] }}{% endif %}&#13;XP : {{ pokemon.xp }}">{{ pokemon.nom }}</td>
                                         <td id="price-sell-{{ pokemon.id }}"></td>
@@ -70,7 +83,8 @@
                             </table>
                         </div>
                         <div>
-                            <input id="buttonSubmitBuy" type="submit" value="Vendre ce pokémon." onclick="return confirm('Es-tu sûr de ton choix ?');">
+                            <input id="buttonSubmitBuy" type="submit" value="Vendre ce pokémon."
+                                   onclick="return confirm('Es-tu sûr de ton choix ?');">
                         </div>
                     </form>
                 </div>
@@ -79,9 +93,9 @@
     </div>
     <script>
         function addPrice(elem) {
-            if(!document.getElementById("price-sell-input-" + elem.value)) {
+            if (!document.getElementById("price-sell-input-" + elem.value)) {
                 let alreadyExistsInput = document.querySelectorAll('[id^=price-sell-input-')
-                if(alreadyExistsInput) {
+                if (alreadyExistsInput) {
                     alreadyExistsInput.forEach(element => {
                         element.outerHTML = "";
                     });

@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container">
-        <h2 class="text-center" style="margin-top: 20px; color: #ffba08;">La liste en détail des pokémons que vous possedez</h2>
+        <h2 class="text-center" style="margin-top: 20px; color: #ffba08;">La liste des pokémons que tu possèdes</h2>
     </div>
     <div class="container" style="margin-top: 25px;">
         <div class="table-responsive table-borderless border rounded border-warning shadow" style="margin-right: auto; margin-left: auto;background-color: #1e2833;">
@@ -15,7 +15,7 @@
                         <th>Xp</th>
                         <th>Elo</th>
                         <th>Repos</th>
-                        <th>Status (Prix si en vente)</th>
+                        <th>Status</th>
                         <th>Vendre rapidement</th>
                     </tr>
                 </thead>
@@ -27,17 +27,18 @@
                         <td>{{ pokemon.elo }}</td>
                         <td>{{ pokemon.repos ? pokemon.repos|date('Y-m-d H:i:s') : '' }}</td>
                         {% if pokemon.status == 'avendre' %}
-                            <td>A vendre au prix de {{ pokemon.prix }} PokeDollars</td>
+                            <td>En vente</td>
+                            <td>{{ pokemon.prix }} PokeDollars</td>
                         {% else %}
                             <td>{{ pokemon.status }}</td>
+                            <td>
+                                <form action="{{ path('marker_sell') }}" method="GET">
+                                    <input value="{{ pokemon.id }}" name="pkmToSell" hidden>
+                                    <input type="number" name="pkmPrix" min="0" placeholder="Indique le prix" required>
+                                    <input type="submit" value="Vendre">
+                                </form>
+                            </td>
                         {% endif %}
-                        <td>
-                            <form action="{{ path('marker_sell') }}" method="GET">
-                                <input value="{{ pokemon.id }}" name="pkmToSell" hidden>
-                                <input type="number" name="pkmPrix" min="0" placeholder="Indique le prix" required>
-                                <input type="submit" value="Vendre">
-                            </form>
-                        </td>
                     </tr>
                 {% else %}
                     <tr>

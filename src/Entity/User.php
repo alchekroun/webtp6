@@ -64,23 +64,6 @@ class User implements UserInterface
     }
 
     /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->username;
-    }
-
-    public function setUsername(string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
-    /**
      * @see UserInterface
      */
     public function getRoles(): array
@@ -179,15 +162,33 @@ class User implements UserInterface
             $this->pokemon->removeElement($pokemon);
             // set the owning side to null (unless already changed)
             if ($pokemon->getUser() === $this) {
-                $pokemon->setUser(null);
+                $pokemon->setUser(NULL);
             }
         }
+
         return $this;
     }
 
     public function __toString()
     {
         return $this->getUsername();
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
     }
 
     /**

@@ -7,17 +7,24 @@
         <form method="get" action="{{ path('hunt_hunted') }}">
             <div class="row">
                 <div class="col">
-                    <p class="lead text-justify border rounded border-warning shadow" style="color: #ffffff;background-color: #1e2833;padding-right: 10px;padding-left: 10px;">Tu viens d'arriver sur les lieux, tu trouves ces pokémons. Clique sur le pokémon que tu veux capturer. Choisis bien ton pokémon car les chances varient selon ton allié !&nbsp;</p>
+                    <p class="lead text-justify border rounded border-warning shadow"
+                       style="color: #ffffff;background-color: #1e2833;padding-right: 10px;padding-left: 10px;">Tu viens
+                        d'arriver sur les lieux, tu trouves ces pokémons. Clique sur le pokémon que tu veux capturer.
+                        Choisis bien ton pokémon car les chances varient selon ton allié !&nbsp;</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col text-center">
-                    <label>Choisi ton pokémon, seuls les pokémons libre et qui n'ont pas combatu ni été entrainé la dernière heure peuvent t'aider à les capturer.
+                    <label>Choisi ton pokémon, seuls les pokémons libre et qui n'ont pas combatu ni été entrainé la
+                        dernière heure peuvent t'aider à les capturer.
                         <select onchange="actu(this)" name="mypkm" required>
                             <option value="" id="-1">Choisissez votre compagnon !</option>
                             {% for pkm in poke_user %}
                                 {% if pkm.status == "libre" %}
-                                    <option value="{{ pkm.id }}" id="{{ pkm.xp }}-{{ pkm.getEspece().id }}-{{ pkm.espece.id }}">{{ pkm.nom }} - {{ pkm.xp }}xp</option>
+                                    <option value="{{ pkm.id }}"
+                                            id="{{ pkm.xp }}-{{ pkm.getEspece().id }}-{{ pkm.espece.id }}">{{ pkm.nom }}
+                                        - {{ pkm.xp }}xp
+                                    </option>
                                 {% endif %}
                             {% endfor %}
                         </select>
@@ -27,13 +34,17 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <div class="table-responsive table-borderless border rounded border-warning shadow" style="background-color: #1e2833">
+                    <div class="table-responsive table-borderless border rounded border-warning shadow"
+                         style="background-color: #1e2833">
                         <table class="table table-bordered">
                             <tbody style="color: #FFFFFF">
                             {% for speciesToCapture in especes %}
                                 <tr>
-                                    <td><label><input type="radio" name="cappkm" value="{{ speciesToCapture.id }}" required>{{ speciesToCapture.nom }}</label></td>
-                                    <td><img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ speciesToCapture.id }}.png" alt="img : {{ speciesToCapture.nom }}"/></td>
+                                    <td><label><input type="radio" name="cappkm" value="{{ speciesToCapture.id }}"
+                                                      required>{{ speciesToCapture.nom }}</label></td>
+                                    <td>
+                                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ speciesToCapture.id }}.png"
+                                             alt="img : {{ speciesToCapture.nom }}"/></td>
                                     <td style="color: red"><p id="chances-{{ speciesToCapture.evolution }}"></p></td>
                                 </tr>
                             {% endfor %}
@@ -53,32 +64,31 @@
 
 {% block javascripts %}
     <script>
-        function actu(elem){
+        function actu(elem) {
             let imgPkm = document.getElementById("imgpkm");
             let chancespkm = document.querySelectorAll('[id^=chances');
             chancespkm.forEach(element => {
                 const b = element.id.split('-');
-                if(b[1]==='n'){
-                    b[1]=1;
-                }else{
-                    b[1]=2;
+                if (b[1] === 'n') {
+                    b[1] = 1;
+                } else {
+                    b[1] = 2;
                 }
                 let ahah = "";
-                for(let item of document.getElementsByTagName("option"))
-                {
-                    if(item.value===elem.value){
+                for (let item of document.getElementsByTagName("option")) {
+                    if (item.value === elem.value) {
                         ahah = item.id;
                     }
                 }
                 const a = ahah.split('-');
-                imgPkm.src= "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + a[2] +".png";
-                if(a[1]==='n'){
-                    a[1]=1;
-                }else{
-                    a[1]=2;
+                imgPkm.src = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/" + a[2] + ".png";
+                if (a[1] === 'n') {
+                    a[1] = 1;
+                } else {
+                    a[1] = 2;
                 }
-                const prob = 1 / (b[1] * (1 / (a[1] * (a[0]/8))));
-                element.innerText = prob + " %" ;
+                const prob = 1 / (b[1] * (1 / (a[1] * (a[0] / 8))));
+                element.innerText = prob + " %";
             });
         }
     </script>

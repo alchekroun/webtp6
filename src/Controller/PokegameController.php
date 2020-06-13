@@ -23,7 +23,7 @@ class PokegameController extends AbstractController
         foreach ($pokemons as $key => $value) {
             $espece = $value->getEspece();
             $types = $espece->getType();
-            if($espece->getEvolution() === 'n'){
+            if ($espece->getEvolution() === 'n') {
                 $nb_by_base++;
             } else {
                 $nb_by_evol++;
@@ -37,11 +37,14 @@ class PokegameController extends AbstractController
             }
         }
 
-        return $this->render('pokegame/index.html.twig', [
-            'nbPkm' => $nbPkm,
-            'nb_by_evol' => $nb_by_evol,
-            'nb_by_base' => $nb_by_base,
-            'nb_by_type' => $nb_by_type,
-        ]);
+        return $this->render(
+            'pokegame/index.html.twig',
+            [
+                'nbPkm' => $nbPkm,
+                'nb_by_evol' => $nb_by_evol,
+                'nb_by_base' => $nb_by_base,
+                'nb_by_type' => $nb_by_type,
+            ]
+        );
     }
 }

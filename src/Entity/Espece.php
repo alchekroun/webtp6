@@ -55,18 +55,6 @@ class Espece
         return $this->id;
     }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
-
-    public function setNom(string $nom): self
-    {
-        $this->nom = $nom;
-
-        return $this;
-    }
-
     public function getCourbeXP(): ?string
     {
         return $this->courbeXP;
@@ -129,7 +117,7 @@ class Espece
             $this->pokemon->removeElement($pokemon);
             // set the owning side to null (unless already changed)
             if ($pokemon->getEspece() === $this) {
-                $pokemon->setEspece(null);
+                $pokemon->setEspece(NULL);
             }
         }
 
@@ -151,5 +139,17 @@ class Espece
     public function __toString()
     {
         return $this->getNom();
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
     }
 }

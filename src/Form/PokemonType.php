@@ -13,20 +13,28 @@ class PokemonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom', null, ['label' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Vous devez lui donner un nom',
-                    ]),
-                    ]
-                ])
-        ;
+            ->add(
+                'nom',
+                NULL,
+                [
+                    'label' => false,
+                    'constraints' => [
+                        new NotBlank(
+                            [
+                                'message' => 'Vous devez lui donner un nom',
+                            ]
+                        ),
+                    ],
+                ]
+            );
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Pokemon::class,
-        ]);
+        $resolver->setDefaults(
+            [
+                'data_class' => Pokemon::class,
+            ]
+        );
     }
 }

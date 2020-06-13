@@ -8,10 +8,10 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method Espece|null find($id, $lockMode = null, $lockVersion = null)
- * @method Espece|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Espece|null find($id, $lockMode = NULL, $lockVersion = NULL)
+ * @method Espece|null findOneBy(array $criteria, array $orderBy = NULL)
  * @method Espece[]    findAll()
- * @method Espece[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Espece[]    findBy(array $criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL)
  */
 class EspeceRepository extends ServiceEntityRepository
 {
@@ -28,11 +28,11 @@ class EspeceRepository extends ServiceEntityRepository
         $stmt->execute(['tt' => $type->getId()]);
         $espece_by_type = $stmt->fetchAll();
         $tok = rand(0, sizeof($espece_by_type) - 1);
-        if(isset($espece_by_type))
-        {
+        if (isset($espece_by_type)) {
             return $espece_by_type[$tok];
         }
-        return null;
+
+        return NULL;
     }
     // /**
     //  * @return Espece[] Returns an array of Espece objects

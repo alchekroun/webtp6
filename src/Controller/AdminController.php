@@ -24,6 +24,7 @@ class AdminController extends AbstractController
     {
         $typeRepo = $this->getDoctrine()->getRepository(Type::class);
         $typeRepo->initdb();
+
         return $this->redirectToRoute('home');
     }
 
@@ -35,6 +36,7 @@ class AdminController extends AbstractController
     {
         $especeRepo = $this->getDoctrine()->getRepository(Espece::class);
         $especeRepo->initdb();
+
         return $this->redirectToRoute('home');
     }
 
@@ -46,6 +48,7 @@ class AdminController extends AbstractController
     {
         $typeRepo = $this->getDoctrine()->getRepository(Type::class);
         $typeRepo->initdblinkespece();
+
         return $this->redirectToRoute('home');
     }
 
