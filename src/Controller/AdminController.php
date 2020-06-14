@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/ACCS")
- * @IsGranted("ROLE_USER")
+ * @Route("/admin/ACCS")
+ * @IsGranted("ROLE_ADMIN")
  */
 class AdminController extends AbstractController
 {
