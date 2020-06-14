@@ -19,7 +19,7 @@
                             <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{{ pokemon.getEspece().id }}.png"
                                  width="100" height="100" alt="{{ pokemon.getEspece().nom }}"/>
                             <h3 class="name">{{ pokemon.nom }}</h3>
-                            <p class="description">{{ pokemon.getEspece().nom }}<br>{{ pokemon.xp }}XP</p>
+                            <p class="description">{{ pokemon.getEspece().nom }}<br>Niv. {{ pokemon.niveau }} avec {{ pokemon.xp }} XP</p>
 
                             <a href="{{ path('train_pick', {'idPkm': pokemon.id}) }}"
                                class="btn btn-light">Entrainer</a>

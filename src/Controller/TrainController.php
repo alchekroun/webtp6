@@ -5,7 +5,6 @@ namespace App\Controller;
 
 use App\Entity\Pokemon;
 use ArrayObject;
-use DateInterval;
 use DateTime;
 use DateTimeZone;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -32,19 +31,18 @@ class TrainController extends AbstractController
         $poke_by_user = new ArrayObject();
         foreach ($this->getUser()->getPokemons() as $key => $value) {
             if ($value->getStatus() == "libre") {
-                if ($value->getRepos() == null) {
+                if ($value->getRepos() == NULL) {
                     $poke_by_user->append($value);
                 } else {
-                    $value->getRepos()->add(new DateInterval('PT1H'));
-                    if ($value->getRepos() < DateTime::createFromFormat(
-                            'd/m/Y H:i:s',
-                            date('d/m/Y H:i:s', time()),
-                            new DateTimeZone("Europe/Paris")
-                        )) {
-                        $this->debug_to_console("avant".$value->getRepos()->format('d/m/Y H:i:s'));
+                    $dnow = DateTime::createFromFormat(
+                        'd/m/Y H:i:s',
+                        date('d/m/Y H:i:s', time()),
+                        new DateTimeZone("Europe/Paris")
+                    );
+                    $diff = $value->getRepos()->diff($dnow);
+                    $hours = $diff->h + ($diff->days * 24) + ($diff->m * 720);
+                    if ($hours > 1) {
                         $poke_by_user->append($value);
-                        $value->getRepos()->sub(new DateInterval('PT1H'));
-                        $this->debug_to_console("après".$value->getRepos()->format('d/m/Y H:i:s'));
                     }
                 }
             }
@@ -57,16 +55,6 @@ class TrainController extends AbstractController
                 'poke_by_user' => $poke_by_user,
             ]
         );
-    }
-
-    function debug_to_console($data)
-    {
-        $output = $data;
-        if (is_array($output)) {
-            $output = implode(',', $output);
-        }
-
-        echo "<script>console.log('Debug Objects: ".$output."' );</script>";
     }
 
     /**
@@ -82,6 +70,7 @@ class TrainController extends AbstractController
         $randToken = rand(10, 30);
         $pkmPicked = $pokeRepository->find($idPkm);
         $pkmPicked->setXp($pkmPicked->getXp() + $randToken);
+        $pokeRepository->verifyAndLevelUp($pkmPicked);
         $pkmPicked->setRepos(
             DateTime::createFromFormat('d/m/Y H:i:s', date('d/m/Y H:i:s', time()), new DateTimeZone("Europe/Paris"))
         );
@@ -95,5 +84,15 @@ class TrainController extends AbstractController
                 'xpearned' => $randToken,
             ]
         );
+    }
+
+    function debug_to_console($data)
+    {
+        $output = $data;
+        if (is_array($output)) {
+            $output = implode(',', $output);
+        }
+
+        echo "<script>console.log('Debug Objects: " . $output . "' );</script>";
     }
 }

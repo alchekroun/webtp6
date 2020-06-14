@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Xp</th>
+                        <th>Niveau</th>
                         <th>Elo</th>
                         <th>Repos</th>
                         <th>Status</th>
@@ -23,7 +23,7 @@
                 {% for pokemon in pokemon %}
                     <tr>
                         <td><a href="{{ path('pokemon_show', {'id': pokemon.id}) }}">{{ pokemon.nom }}</a></td>
-                        <td>{{ pokemon.xp }}</td>
+                        <td>{{ pokemon.niveau }}</td>
                         <td>{{ pokemon.elo }}</td>
                         <td>{{ pokemon.repos ? pokemon.repos|date('Y-m-d H:i:s') : '' }}</td>
                         {% if pokemon.status == 'avendre' %}

@@ -23,7 +23,7 @@
                                 {% if pkm.status == "libre" %}
                                     <option value="{{ pkm.id }}"
                                             id="{{ pkm.xp }}-{{ pkm.getEspece().id }}-{{ pkm.espece.id }}">{{ pkm.nom }}
-                                        - {{ pkm.xp }}xp
+                                        - Niv. {{ pkm.niveau }}
                                     </option>
                                 {% endif %}
                             {% endfor %}

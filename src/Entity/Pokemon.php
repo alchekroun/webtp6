@@ -36,6 +36,11 @@ class Pokemon
     private $user;
 
     /**
+     * @ORM\Column(type="integer", nullable=false, options={"default": 1})
+     */
+    private $niveau = 1;
+
+    /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $prix;
@@ -162,6 +167,18 @@ class Pokemon
     public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getNiveau(): ?int
+    {
+        return $this->niveau;
+    }
+
+    public function setNiveau(?int $niveau): self
+    {
+        $this->niveau = $niveau;
 
         return $this;
     }

@@ -34,7 +34,7 @@
                                                         width="30" height="30"
                                                         alt="{{ pokemon.getEspece().nom }}"/></label></td>
                                         <td data-togle="tooltip" data-placement="left"
-                                            title="Espece : {{ pokemon.getEspece().nom }}&#13;Type : {{ pokemon.getEspece().getType()[0].nom }} {% if pokemon.getEspece().getType()[1] is defined %} & {{ pokemon.getEspece().getType()[1] }}{% endif %}&#13;XP : {{ pokemon.xp }}">{{ pokemon.nom }}</td>
+                                            title="Espece : {{ pokemon.getEspece().nom }}&#13;Type : {{ pokemon.getEspece().getType()[0].nom }} {% if pokemon.getEspece().getType()[1] is defined %} & {{ pokemon.getEspece().getType()[1] }}{% endif %}&#13;Niveau: {{ pokemon.niveau }}&#13;XP : {{ pokemon.xp }}">{{ pokemon.nom }}</td>
                                         <td>{{ pokemon.prix }} $</td>
                                         {% if app.user == pokemon.getUser() %}
                                             <td>
@@ -75,7 +75,7 @@
                                                         width="30" height="30"
                                                         alt="{{ pokemon.getEspece().nom }}"/></label></td>
                                         <td data-togle="tooltip" data-placement="left"
-                                            title="Espece : {{ pokemon.getEspece().nom }}&#13;Type : {{ pokemon.getEspece().getType()[0].nom }} {% if pokemon.getEspece().getType()[1] is defined %} & {{ pokemon.getEspece().getType()[1] }}{% endif %}&#13;XP : {{ pokemon.xp }}">{{ pokemon.nom }}</td>
+                                            title="Espece : {{ pokemon.getEspece().nom }}&#13;Type : {{ pokemon.getEspece().getType()[0].nom }} {% if pokemon.getEspece().getType()[1] is defined %} & {{ pokemon.getEspece().getType()[1] }}{% endif %}&#13;Niveau: {{ pokemon.niveau }}&#13;XP : {{ pokemon.xp }}">{{ pokemon.nom }}</td>
                                         <td id="price-sell-{{ pokemon.id }}"></td>
                                     </tr>
                                 {% endfor %}
