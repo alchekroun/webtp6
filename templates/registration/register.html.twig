@@ -8,17 +8,38 @@
             {{ form_start(registrationForm) }}
             {% if app.user %}
                 <div class="mb-3">
-                    Vous êtes déjà connecté avec : {{ app.user.username }}, <a href="{{ path('app_logout') }}">cliquez ici pour vous déconnecter</a>
+                    Vous êtes déjà connecté avec : {{ app.user.username }}, <a href="{{ path('app_logout') }}">cliquez
+                        ici pour vous déconnecter</a>
                 </div>
             {% endif %}
             <h2 class="sr-only">Login Form</h2>
             <div class="illustration"><i class="far fa-user" style="color: #2980ef;"></i></div>
             <div class="form-group">{{ form_row(registrationForm.username, {'attr': {'class': 'form-control', 'placeholder': 'Pseudonyme'}}) }} </div>
-            <div class="form-group">{{ form_row(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe'}}) }}</div>
-            <div class="form-group"><input class="form-control" type="password" placeholder="Mot de passe" required=""></div>
-            <div class="form-group"><button class="btn btn-primary btn-block" data-bs-hover-animate="pulse" type="submit" style="background-color: #214a80;">S'inscrire</button></div>
-            <span class="forgot">En cliquant sur bouton tu acceptes les <a href="#">cgi</a>, et à devenir le meilleur.</span>
+            <div class="form-group">{{ form_row(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'placeholder': 'Mot de passe', 'onkeyup': 'check();'}}) }}</div>
+            <div class="form-group"><input id="confirm_password" class="form-control" type="password" placeholder="Mot de passe"
+                                           onkeyup="check();" required> <span id="message"></span></div>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" id="submitbtn" data-bs-hover-animate="pulse" type="submit"
+                        style="background-color: #214a80;">S'inscrire
+                </button>
+            </div>
+            <span class="forgot">En cliquant sur bouton tu acceptes les <a
+                        href="#">cgi</a>, et à devenir le meilleur.</span>
             {{ form_end(registrationForm) }}
         </form>
     </div>
+    <script>
+        var check = function() {
+            if(document.getElementById('registration_form_plainPassword').value === document.getElementById('confirm_password').value)
+            {
+                document.getElementById('message').style.color = 'green';
+                document.getElementById('message').innerHTML = 'OK';
+                document.getElementById('submitbtn').disabled = false;
+            } else {
+                document.getElementById('message').style.color = 'red';
+                document.getElementById('message').innerHTML = 'Différents';
+                document.getElementById('submitbtn').disabled = true;
+            }
+        }
+    </script>
 {% endblock %}

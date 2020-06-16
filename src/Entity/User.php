@@ -49,6 +49,11 @@ class User implements UserInterface
     private $elo = 1500;
 
     /**
+     * @ORM\Column(type="string", nullable=false, options={"default": "newbie"})
+     */
+    private $status = "newbie";
+
+    /**
      * @ORM\OneToMany(targetEntity=Pokemon::class, mappedBy="user")
      */
     private $pokemon;
@@ -197,5 +202,17 @@ class User implements UserInterface
     public function getPokemon(): Collection
     {
         return $this->pokemon;
+    }
+
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    public function setStatus(string $status): self
+    {
+        $this->status = $status;
+
+        return $this;
     }
 }

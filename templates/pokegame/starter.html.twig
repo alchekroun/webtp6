@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Starter{% endblock %}
+
+{% block body %}
+    <div style="padding: 10px;">
+        <div class="container" style="padding: 10px;">
+            <p class="lead text-justify border rounded border-warning shadow"
+               style="color: #FFFFFF; background-color: #1e2833; padding-right: 10px; padding-left: 10px;">Tu viens de débuter, choisis donc un de ses trois pokémons pour débuter l'aventure.</p>
+        </div>
+        <form method="post">
+            {{ form_start(pkmForm) }}
+            <div class="row justify-content-center features">
+                <div class="col-sm-5 col-md-4 col-lg-3 item">
+                    <div class="border rounded border-warning shadow"
+                         style="text-align: center; padding: 30px; background-color: #1e2833; margin-bottom: 10px; color: white">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+                             width="100" height="100" alt="Bulbizarre"/>
+                        <h3 class="name">Bulbizarre</h3>
+                        <p class="description">PLANTE & POISON<br></p>
+                        <input type="radio" name="pkmPicked" value="1">
+                    </div>
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3 item">
+                    <div class="border rounded border-warning shadow"
+                         style="text-align: center; padding: 30px; background-color: #1e2833; margin-bottom: 10px; color: white">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png"
+                             width="100" height="100" alt="Salamèche"/>
+                        <h3 class="name">Salamèche</h3>
+                        <p class="description">FEU<br></p>
+                        <input type="radio" name="pkmPicked" value="4">
+                    </div>
+                </div>
+                <div class="col-sm-5 col-md-4 col-lg-3 item">
+                    <div class="border rounded border-warning shadow"
+                         style="text-align: center; padding: 30px; background-color: #1e2833; margin-bottom: 10px; color: white">
+                        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png"
+                             width="100" height="100" alt="Carapuce"/>
+                        <h3 class="name">Carapuce</h3>
+                        <p class="description">EAU<br></p>
+                        <input type="radio" name="pkmPicked" value="7">
+                    </div>
+                </div>
+            </div>
+            <div class="container" style="padding: 50px;">
+                <div class="form-group">
+                    {{ form_row(pkmForm.nom, {'attr': {'class': 'form-control', 'placeholder': 'Surnom du pokémon'}}) }}
+                </div>
+                <div>
+                    <input type="submit" value="Super !">
+                    {{ form_end(pkmForm) }}
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

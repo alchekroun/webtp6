@@ -15,6 +15,9 @@ class PokegameController extends AbstractController
      */
     public function index()
     {
+        if($this->getUser()->getStatus() == "newbie"){
+            return $this->redirectToRoute('pokemon_starter');
+        }
         $pokemons = $this->getUser()->getPokemons();
         $nbPkm = sizeof($pokemons);
         $nb_by_evol = 0;
