@@ -27,30 +27,4 @@ class AdminController extends AbstractController
 
         return $this->redirectToRoute('home');
     }
-
-    /**
-     * @Route("/init_db/espece", name="accs_init_db_espece", methods={"GET"})
-     * @return RedirectResponse
-     */
-    public function initdbespece()
-    {
-        $especeRepo = $this->getDoctrine()->getRepository(Espece::class);
-        $especeRepo->initdb();
-
-        return $this->redirectToRoute('home');
-    }
-
-    /**
-     * @Route("/init_db/espece_type", name="accs_init_db_espece_type", methods={"GET"})
-     * @return RedirectResponse
-     */
-    public function initdbespecetype()
-    {
-        $typeRepo = $this->getDoctrine()->getRepository(Type::class);
-        $typeRepo->initdblinkespece();
-
-        return $this->redirectToRoute('home');
-    }
-
-
 }
