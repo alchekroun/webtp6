@@ -12,6 +12,10 @@ Bug sur le temps de repos, la vérification est bonne mais le temps sur le serve
 
 L' "elo" qu'on retrouve sur les deux classes "User" et "Pokemons" devait servir à une fonctionnalité de combat que nous avons pas eu le temps de mettre en place.
 
+Diagramme de notre BDD :
+
+![bbd](https://i.ibb.co/dcy6p7V/Untitled-Diagram.png)
+
 ### Premier lancement
 
 Vous devez lancer les instructions suivantes dans l'ordre avant le premier lancement.
